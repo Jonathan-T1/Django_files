@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block title %}| Users Edit |{% endblock  %}
+
+{% block content %}
+
+<h3> Edit User </h3>
+<div class="container m-5 p-5 ">
+
+    <form action="" method="post">
+        {% csrf_token %}
+            {{ form }}
+        <br>
+        <button class="button" title="Actualizar" type="submit"><i class="fa-solid fa-floppy-disk"></i>DONE</button>
+    </form>
+
+</div>
+
+{% endblock  %}

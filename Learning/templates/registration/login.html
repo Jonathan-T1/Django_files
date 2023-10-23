@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% block title %} Login {% endblock  %}
+{% block content %}
+<div class="wrapper">
+  <span class="icon-close" href={% url 'home' %}><i class="bi bi-x"></i></span>
+  <div
+  class="form-box login">
+    <h2>login</h2>
+    <form action="" method="post">
+      {% csrf_token %}
+          <div class="input-box">
+              <span class="icon" ><i class="bi bi-person-fill"></i></span>
+              <input type="text" name="username" id="" >
+              <label for="">Username</label>
+          </div>
+          <div class="input-box">
+              <span class="icon"><i class="bi bi-file-lock2-fill"></i></span>
+              <input type="password" name="password" id="" >
+              <label for="">password</label>
+          </div>
+          <div class="remember-forgot">
+              <label for=""><input type="checkbox">Remember Me </label>
+              <a href="#">Forgot Password?</a>
+          </div>
+          <button class="btn btn-sm btn-success float-end" type="submit" class="btn">Login</button>
+    </form>
+  </div>
+</div>
+
+{% endblock %}
+
+{#
+  <h3>Login</h3>
+<br>
+
+<form action="" method="post">
+    {% csrf_token %}
+    <div class="card mx-auto" style="width: 30rem;">
+        <div class="card-body">
+          <h5 class="card-title">Ingrese Sus Credenciales</h5>  
+          <label for="">Nombre de Usuario</label> <br>     
+          <input type="text" name="username" id="" placeholder="Nombre De Usuarion">
+          <br>
+          <label for="">Contraseña</label> <br> 
+          <input type="password" name="password" id="" placeholder="Contraseña">
+          <br>
+          <a href={% url 'home' %} class="card-link">Home</a>
+
+          <button class="btn btn-sm btn-success float-end" type="submit">Sing In</button>
+        </div>
+    </div>    
+</form>
+  
+ #}
+  

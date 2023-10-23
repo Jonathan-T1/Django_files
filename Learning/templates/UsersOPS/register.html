@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block title %} Register {% endblock title %}
+
+{% block content %}
+
+
+
+<form action="" method="post">
+    {% csrf_token %}
+    <div class="card mx-auto" style="width: 30rem;">
+        <div class="card-body">
+          <h5 class="card-title">Complete Todos Los Campos</h5>
+          {{ form.first_name.label_tag }} <br>
+          {{ form.first_name }}
+          {{ form.last_name.label_tag }} <br>
+          {{ form.last_name }}
+          {{ form.cedula.label_tag }} <br>
+          {{ form.cedula }}
+          {{ form.phone.label_tag }} <br>
+          {{ form.phone}}    
+          {{ form.username.label_tag }} <br>
+          {{ form.username }}
+          {{ form.password1.label_tag }} <br>
+          {{ form.password1 }} <br>
+          {{ form.password2.label_tag }} <br>
+          {{ form.password2 }} <br>
+          {{ form.is_staff}}
+          {{ form.is_staff.label_tag}} <br>
+          {{ form.is_profesor}}
+          {{ form.is_profesor.label_tag}} <br>
+          {{ form.is_Estudiante}}
+          {{ form.is_Estudiante.label_tag}} <br>
+          
+          <a href={% url 'home' %} class="card-link">Inicio</a>
+
+          <button class="btn btn-sm btn-primary float-end" type="submit">Register user</button>
+        </div>
+    </div>    
+</form>
+
+{% endblock content %}
