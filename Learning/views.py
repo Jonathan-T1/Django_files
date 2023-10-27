@@ -27,11 +27,8 @@ def register(request):
         if user_creation_form.is_valid():
             user_creation_form.save()
 
-            user = authenticate(username=user_creation_form.cleaned_data['username'], password = user_creation_form.cleaned_data['password1'])
-            login(request, user)
             return redirect('see_users')
-    return render(request, 'UsersOPS/register.html',data)
-
+    return render(request, 'UsersOPS/register.html', data)
 def datosus (request):
     user = User.objects.all()
     data = {
@@ -137,3 +134,7 @@ def delete_task(request, task_id): #Eliminar Tarea
     if request.method == 'POST':
         task.delete()
         return redirect ('tasks')
+    
+def cohorte(request):
+    cohorte = Cohorte.objects.all()
+    return render(request,'Cohortes/cohortes.html',{'cohorte':cohorte})

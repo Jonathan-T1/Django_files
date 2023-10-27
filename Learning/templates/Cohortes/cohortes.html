@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block title %} | Chorte |{% endblock  %}
+{% block content %}
+<div>
+<div class="mb-2" class="fixed-top">
+    <a href='#' class="btn btn-primary" role="button">
+        <i class="bi bi-plus-circle "></i> Register a Cohorte</a>
+</div>
+<br>
+<table class="table table-dark table-striped" >
+    <thead class="table-dark">
+    </thead>
+{% for c in cohorte %}
+<div class="card mb-3" style="max-width: 540px;">
+    <div class="row g-0">
+      <div class="col-md-4">
+        <p>aca puede ir imagen</p>
+      </div>
+      <div class="col-md-8">
+        <div class="card-body">
+            <h5 class="card-title">{{c.codigoCoh}}</h5>
+            <h3 class="card-title">{{c.nombreCoh}}</h3>
+            <p class="card-text">{{c.descrptionCoh}}</p>
+            <p class="card-text"><small class="text-body-secondary">created on {{c.created}}</small></p>
+            <p class="card-text"><small class="text-body-secondary">Last updated {{c.modified}}</small></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</table>
+</div>
+{% endfor %}
+{% endblock  %}

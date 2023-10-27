@@ -13,6 +13,7 @@ urlpatterns = [
     path('Register/', register, name='register'),
     path('editaruser/<int:pk>/', editaruser, name='edit_user'),
     path('delete/<int:pk>/',delete_user,name='delete_user'),
+    path('cohorte/',cohorte, name='cohortes'),
 #This are the task that Cesar did 
     path('tasks/', tasks, name="tasks"),
     path('tasks_completed', tasks_completed, name="tasks_completed"),

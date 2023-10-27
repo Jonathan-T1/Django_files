@@ -43,27 +43,6 @@
               </ul>
             </li>
           </ul>
-            {% elif  user.is_staff%} 
-            <li class="nav-item">
-              <a class="nav-link active" href={% url 'exit' %}>Log out</a>
-              <a class="nav-link active" href={% url 'see_users' %}>Users</a>
-            </li>
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle active" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                Hellow {{ user.username }} Thanks for be our staff member <br>
-                this are your options
-              </a>
-              <ul class="dropdown-menu dropdown-menu-dark">
-                <li><a class="dropdown-item" href="#">homework assignment</a></li>
- 
-                <li><a class="dropdown-item" href="#">Curses</a></li>
-                <li>
-                  <hr class="dropdown-divider">
-                </li>
-                <li><a class="dropdown-item" href="#">Projects</a></li>
-              </ul>
-            </li>
-          </ul>
             {% elif user.is_Estudiante %}
           <form class="d-flex mt-3" role="search">
             <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
@@ -76,6 +55,28 @@
             <li class="nav-item">
               <a class="nav-link active" href={% url 'exit' %}>Log out</a>
             </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle active" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Hellow {{ user.username }} Thanks for be our staff member <br>
+                this are your options
+              </a>
+              <ul class="dropdown-menu dropdown-menu-dark">
+                <li><a class="dropdown-item" href={% url "see_users" %}>User</a></li>
+                <li>
+                  <hr class="dropdown-divider">
+                </li>
+                <li><a class="dropdown-item" href={% url 'cohortes' %}>Cohorte</a></li>
+                <li>
+                  <hr class="dropdown-divider">
+                </li>
+                <li><a class="dropdown-item" href="#">Signature</a></li>
+                <li>
+                  <hr class="dropdown-divider">
+                </li>
+                <li><a class="dropdown-item" href="#">Curses</a></li>
+              </ul>
+            </li>
+          </ul>
             {% endif %}
             {% else %}
             <li class="nav-item">

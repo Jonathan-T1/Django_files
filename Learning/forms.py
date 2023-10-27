@@ -1,5 +1,5 @@
 from django import forms
-from .models import User , Task
+from .models import User , Task ,Cohorte
 from django.contrib.auth.forms import UserCreationForm
 
 
@@ -47,3 +47,8 @@ class TaskForm(forms.ModelForm):
             'description':forms.Textarea(attrs={'class':'form-control', 'placeholder':'Write a description'}),
             'important':forms.CheckboxInput(attrs={'class':'form-check-input m-auto'})
         }
+
+class cohorte(forms.ModelForm):
+    class Meta:
+        model = Cohorte
+        fields = ['codigoCoh','nombreCoh','descrptionCoh','user']
