@@ -35,7 +35,7 @@ class CustumUserCreationForm(UserCreationForm):
 class editarUser (forms.ModelForm):
     class Meta:
         model = User
-        fields = ['username', 'first_name','last_name','cedula','phone','is_staff','is_profesor','is_Estudiante']
+        fields = ['username', 'first_name','last_name','email','cedula','phone','is_staff','is_profesor','is_Estudiante']
 
 class TaskForm(forms.ModelForm):
     class Meta:

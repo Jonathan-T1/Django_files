@@ -58,9 +58,15 @@ def editaruser (request, pk):
         formeditus = editarUser(data=request.POST, instance=editarrol)
         if formeditus.is_valid():
             formeditus.save()
-            
 
-            return redirect('see_users')            
+            messages.success(request, 'Se Edito el Usuario Satisfactoriamente!')
+
+            return redirect('see_users') 
+        else:
+            # Mensaje de error
+            messages.error(request, 'Hubo un error en el formulario. Por favor, corrige los errores.')
+
+            data['form'] = formeditus           
 
     return render(request, 'UsersOPS/editaruser.html', data)
 

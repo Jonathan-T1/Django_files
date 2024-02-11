@@ -4,16 +4,190 @@
 
 {% block content %}
 
-<h3> Edit User </h3>
-<div class="container m-5 p-5 ">
+<div class="m-3 p-3">
 
-    <form action="" method="post">
-        {% csrf_token %}
-            {{ form }}
-        <br>
-        <button class="button" title="Actualizar" type="submit"><i class="fa-solid fa-floppy-disk"></i>DONE</button>
+    <div class="row m-3">
+      <h2 class="text-center">Editar Usuario</h2>
+      
+        {% if messages %}
+          <ul class="messages">
+            {% for message in messages %}
+            <div class="alert alert-danger d-flex align-items-center" role="alert">
+              <div>
+                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+              </div>
+            </div>
+            {% endfor %}
+          </ul>
+        {% endif %}
+    </div>
+      <form class="row g-3 needs-validation" action="" method="post">
+      {% csrf_token %}
+        <div class="col-md-4">
+          <label for="validatename01" class="form-label">Tu nombre</label>
+          <input 
+            class="form-control {% if form.first_name.errors %}is-invalid{% endif %}"
+            type="text" 
+            name = "first_name"  
+            placeholder="Intruduzca su nombre "
+            value="{% if form.errors %}{{ form.first_name.value }}{% else %}{{ user.first_name}}{% endif %}"
+            required/>
+          <div class="invalid-feedback">
+              {% for error in form.first_name.errors %}
+                {{ error }}
+              {% endfor %}
+          </div>
+          <div class="valid-feedback">
+          Luce muy bien!
+         </div>
+        </div>
+    <div class="col-md-4">
+      <label for="validatelastname01" class="form-label">Tu apellido</label>
+      <input 
+            class="form-control {% if form.last_name.errors %}is-invalid{% endif %}"
+            type="text" 
+            name = "last_name"  
+            placeholder="Intruduzca su Apellido"
+            value="{% if form.errors %}{{ form.last_name.value }}{% else %}{{ user.last_name}}{% endif %}"
+            required/>
+            <div class="invalid-feedback">
+                {% for error in form.last_name.errors %}
+                  {{ error }}
+                {% endfor %}
+            </div>
+      <div class="valid-feedback">
+        Luce muy bien!
+      </div>
+    </div>
+    <div class="col-md-4">
+      <label for="validatelastname01" class="form-label">Cedula</label>
+      <input 
+            class="form-control {% if form.cedula.errors %}is-invalid{% endif %}"
+            type="text" 
+            name = "cedula"  
+            placeholder="Intruduzca su Cedula"
+            value="{% if form.errors %}{{ form.cedula.value }}{% else %}{{ user.cedula}}{% endif %}"
+            required/>
+          <div class="invalid-feedback">
+              {% for error in form.cedula.errors %}
+                {{ error }}
+              {% endfor %}
+          </div>
+      <div class="valid-feedback">
+        Luce muy bien!
+      </div>
+    </div>
+    <div class="col-12">
+        <label for="email" class="form-label">Email <span class="text-body-secondary">(Personal)</span></label>
+        <input 
+            class="form-control {% if form.email.errors %}is-invalid{% endif %}"
+            type="email" 
+            name = "email"  
+            placeholder="Intruduzca su email"
+            value="{% if form.errors %}{{ form.email.value }}{% else %}{{ user.email}}{% endif %}"
+            required/>
+          <div class="invalid-feedback">
+              {% for error in form.email.errors %}
+                {{ error }}
+              {% endfor %}
+          </div>
+        <div class="invalid-feedback">
+          Por favor, ingresa una dirección de correo electrónico válida.
+        </div>
+      </div>
+      <div class="col-md-4">
+        <label for="validationCustomUsername" class="form-label">Nombre de usuario</label>
+        <div class="input-group has-validation">
+          <span class="input-group-text" id="inputGroupPrepend">@</span>
+          <input 
+              class="form-control {% if form.username.errors %}is-invalid{% endif %}"
+              type="username" 
+              name = "username"  
+              placeholder="Intruduzca su nombre de Usuario"
+              value="{% if form.errors %}{{ form.username.value }}{% else %}{{ user.username}}{% endif %}"
+              required/>
+            <div class="invalid-feedback">
+              {% for error in form.username.errors %}
+                {{ error }}
+              {% endfor %}
+            </div>
+          <div class="invalid-feedback">
+            Selecciona un nombre de usuario.
+          </div>
+        </div>
+      </div>               
+      <div class="col-md-3">
+        <label for="validationCustom05" class="form-label">Número de contacto</label>
+        <input 
+              class="form-control {% if form.phone.errors %}is-invalid{% endif %}"
+              type="text" 
+              name = "phone"  
+              placeholder=""
+              value="{% if form.errors %}{{ form.phone.value }}{% else %}{{ user.usephonername}}{% endif %}"
+              required/>
+              <div class="invalid-feedback">
+                {% for error in form.phone.errors %}
+                  {{ error }}
+                {% endfor %}
+              </div> 
+        <div class="invalid-feedback">
+          Por favor, escribe tu número de celular.
+        </div>
+      </div> 
+      <div class="col-md-3">
+        </div>
+      <div class="col-md-3">
+        <label for="validationCustom04" class="form-label"><h5>Selecione rol</h5></label> <br>
+        
+          {{ form.is_staff}} {{ form.is_staff.label_tag}} <br>
+          {{ form.is_profesor}} {{ form.is_profesor.label_tag}} <br>
+          {{ form.is_Estudiante}} {{ form.is_Estudiante.label_tag}}
+        
+          
+      </div>
+      <div class="col-md-4">
+        </div>
+      <div class="col-md-4">
+        </div>
+      <div class="col-md-4">
+        <div class="col-12">
+            <button class="btn btn-sm btn-primary float-center" type="submit">Editar Usuario</button>
+        </div>
+        </div>
+
+    
+     
+    
+    {#{% if form.errors %}#}
+      {#<ul class="errorlist">#}
+        {#{% for field, errors in form.errors.items %}#}
+            {#<li>{{ field }}: {{ errors.0 }}</li>#}
+        {#{% endfor %}#}
+      {#</ul>#}
+    {#{% endif %}#}  
     </form>
-
 </div>
+{{ block.super }}
+  {% if success_message %}
+    <script>
+      Swal.fire({
+        icon: 'success',
+        title: '{{ success_message }}',
+        showConfirmButton: false,
+        timer: 2000
+      });
+    </script>
+  {% endif %}
+
+  {% if error_message %}
+    <script>
+      Swal.fire({
+        icon: 'error',
+        title: 'Error en el formulario',
+        text: '{{ error_message }}',
+        showConfirmButton: true
+      });
+    </script>
+  {% endif %}
 
 {% endblock  %}

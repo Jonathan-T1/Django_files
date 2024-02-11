@@ -17,6 +17,7 @@
                 <th>Name & <br> Last Name</th>
                 <th>Username</th>
                 <th>Cedula</th>
+                <th>Email</th>
                 <th>Phone</th>
                 <th>Rol</th>
                 <th class="text-center">Accion's</th>
@@ -30,6 +31,7 @@
                 <th>{{x.first_name | upper}}<br>{{x.last_name | upper}}</th>
                 <th>{{x.username }}</th>
                 <th>{{x.cedula}}</th>
+                <th>{{x.email}}</th>
                 <th>{{x.phone}}</th>
                 {% if x.is_staff %}
                 <td>Administrador</td>
