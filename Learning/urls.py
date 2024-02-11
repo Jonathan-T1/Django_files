@@ -11,6 +11,7 @@ urlpatterns = [
     path('logout/', exit, name='exit'),
     path('veruser/', datosus, name='see_users'),
     path('Register/', register, name='register'),
+    path('ResetPassword/<int:pk>/',Cambiar_contraseña,name='reset_password'),
     path('editaruser/<int:pk>/', editaruser, name='edit_user'),
     path('delete/<int:pk>/',delete_user,name='delete_user'),
     path('cohorte/',cohorte, name='cohortes'),

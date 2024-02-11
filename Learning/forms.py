@@ -48,6 +48,11 @@ class TaskForm(forms.ModelForm):
             'important':forms.CheckboxInput(attrs={'class':'form-check-input m-auto'})
         }
 
+class ChangePasswordForm(UserCreationForm):
+    class Meta:
+        model = User
+        fields = ['password1','password2']
+
 class cohorte(forms.ModelForm):
     class Meta:
         model = Cohorte

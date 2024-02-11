@@ -40,6 +40,7 @@ def register(request):
             data['form'] = user_creation_form
 
     return render(request, 'UsersOPS/register.html', data)
+
 def datosus (request):
     user = User.objects.all()
     data = {
@@ -77,6 +78,23 @@ def delete_user(request, pk):
         user.delete()
         return redirect('see_users')
     return render(request,'UsersOPS/delete_user.html',{'user':user})
+
+def Cambiar_contraseña(request,pk):
+    data={
+        'form':ChangePasswordForm(),
+        'title' : 'Editar Usuario'
+    }
+    usuario = User.objects.get(id=pk)
+    if request.method == 'POST':
+        user_Change_password = ChangePasswordForm(data=request.POST, instance=usuario)
+
+        if user_Change_password.is_valid():
+            user_Change_password.save()
+            messages.success(request, "Contraseña Editada Con Éxito")
+            return redirect('home')
+        else:
+            messages.error(request, "Error al Editar Contraseña")
+    return render(request, 'UsersOPS/change_password.html', data)
 
 def tasks(request): #Vista de tareas
     # tasks = Task.objects.all() #Para mostrar todos los usurios SIRVE PARA VISTA DOCENTE
