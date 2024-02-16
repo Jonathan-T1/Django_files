@@ -46,3 +46,5 @@ class Cohorte(models.Model):
     user  = models.ForeignKey(User, on_delete=models.CASCADE)
     status = models.BooleanField(default=False)
 
+class Signature(models.Model):
+    nameSignature = models.CharField(max_length=60)
