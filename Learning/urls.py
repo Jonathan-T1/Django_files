@@ -14,6 +14,7 @@ urlpatterns = [
     path('ResetPassword/<int:pk>/',Cambiar_contraseña,name='reset_password'),
     path('editaruser/<int:pk>/', editaruser, name='edit_user'),
     path('delete/<int:pk>/',delete_user,name='delete_user'),
+    path('users/me/profile',update_profile,name='update_profile'),
     path('cohorte/',cohorte, name='cohortes'),
 #This are the task that Cesar did 
     path('tasks/', tasks, name="tasks"),

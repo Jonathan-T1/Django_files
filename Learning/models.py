@@ -17,8 +17,6 @@ class User(AbstractUser,AbstractBaseUser,PermissionsMixin):
         ("Estudiante"),
         default=False
     )
-    fotouser=models.ImageField(upload_to='Media/',null=True,blank=True)
-
 
 class Task(models.Model):
     title = models.CharField(max_length=100)
@@ -48,3 +46,29 @@ class Cohorte(models.Model):
 
 class Signature(models.Model):
     nameSignature = models.CharField(max_length=60)
+    nameSignature2 = models.CharField(max_length=60,blank=True,null=True)
+
+    def signatura(self):
+        return "{} , {}".format(self.nameSignature,self.nameSignature2)
+    
+    def __str__(self) :
+        return self.signatura()
+
+
+class Profile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    biography = models.TextField(blank=True)
+    signature = models.ForeignKey(Signature, on_delete=models.CASCADE)
+
+    picture = models.ImageField(
+        upload_to='users/pictures',
+        blank=True,
+        null=True
+    )
+
+    created = models.DateTimeField(auto_now_add=True)
+    modified = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        """Return username."""
+        return self.user.username

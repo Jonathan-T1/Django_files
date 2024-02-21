@@ -12,6 +12,32 @@ def home(request):
     return render(request,'composition/home.html')
 
 @login_required
+def update_profile(request):
+    """Update a user's profile view."""
+    data = {
+        'form': ProfileForm()
+    }
+
+    if request.method == 'POST':
+        user_creation_form = ProfileForm(data=request.POST)
+
+        if user_creation_form.is_valid():
+            user_creation_form.save()
+            
+            # Mensaje de éxito
+            messages.success(request, 'Registro exitoso. ¡Ahora puedes iniciar sesión!')
+
+            return redirect('see_users')
+        else:
+            # Mensaje de error
+            messages.error(request, 'Hubo un error en el formulario. Por favor, corrige los errores.')
+
+            data['form'] = user_creation_form
+
+    return render(request, 'UsersOPS/update_profile.html', data)
+
+
+@login_required
 def Learning(request):
     return render(request,'composition/learning.html')
 def exit (request):
@@ -173,3 +199,5 @@ def delete_task(request, task_id): #Eliminar Tarea
 def cohorte(request):
     cohorte = Cohorte.objects.all()
     return render(request,'Cohortes/cohortes.html',{'cohorte':cohorte})
+
+

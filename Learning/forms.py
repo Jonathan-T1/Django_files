@@ -1,5 +1,5 @@
 from django import forms
-from .models import User , Task ,Cohorte
+from .models import User , Task ,Cohorte, Profile,Signature
 from django.contrib.auth.forms import UserCreationForm
 
 
@@ -57,3 +57,11 @@ class cohorte(forms.ModelForm):
     class Meta:
         model = Cohorte
         fields = ['codigoCoh','nombreCoh','descrptionCoh','user']
+
+class ProfileForm(forms.Form):
+    """Profile form."""
+    biography = forms.CharField(max_length=500, required=False)
+    picture = forms.ImageField()
+    class Meta:
+        model = Signature
+        fields =['signature']
