@@ -6,4 +6,5 @@ from .models import User ,Task, Cohorte,Profile,Signature
 admin.site.register(User),
 admin.site.register(Cohorte),
 admin.site.register(Signature),
-admin.site.register(Profile)
+admin.site.register(Profile),
+admin.site.register(Task)

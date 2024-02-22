@@ -9,7 +9,7 @@ class ProfileCompletionMiddleware:
     
     This make usensure that the theacher and 
     student have to complete the profile 
-    
+        
     def __init__(self, get_response):
         Middleware initialization.
         self.get_response = get_response
