@@ -46,13 +46,12 @@ class Cohorte(models.Model):
 
 class Signature(models.Model):
     nameSignature = models.CharField(max_length=60)
-    nameSignature2 = models.CharField(max_length=60,blank=True,null=True)
 
-    def signatura(self):
-        return "{} , {}".format(self.nameSignature,self.nameSignature2)
+    def signature(self):
+        return "{} ".format(self.nameSignature)
     
     def __str__(self) :
-        return self.signatura()
+        return self.signature()
 
 
 class Profile(models.Model):

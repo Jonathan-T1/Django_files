@@ -11,6 +11,10 @@ from django.contrib.auth import authenticate, login
 def home(request):
     return render(request,'composition/home.html')
 
+def profile(request):
+    cohorte = Cohorte.objects.all()
+    return render(request,'teacherandstuden/profile.html',{'cohorte':cohorte})
+
 @login_required
 def update_profile(request):
     """Update a user's profile view."""

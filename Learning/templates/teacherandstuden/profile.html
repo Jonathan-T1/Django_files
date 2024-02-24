@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+{% block title %} Profile {% endblock  %}
+
+{% block content %} 
+
+<div class="container-fluid" style="border-radius: 10px; background-color: #f0f0f0; padding: 7rem ; margin 3rem ">
+    <div class="row align-self-start" style="padding: 1rem ;">
+        <div class="col-sm-4 d-flex justify-content-center align-self-start" >
+            <img
+                src="{{ user.profile.picture.url }}"
+                alt="@{{ user.username}}"
+                class="rounded-circle"
+                width="150px"
+                height="150px"
+            />
+        </div>
+        <div class="col-sm-8">
+            <h2 style="font-weight: 100;">
+                @{{ user.username }}
+                {% if user == request.user %}
+                    <a
+                        href="{% url "update_profile" %}"
+                        class="ml-5 btn btn-sm btn-outline-info"
+                    >
+                        Edit profile
+                    </a>
+                {% else %}
+                    <a
+                        href=""
+                        class="ml-5 btn btn-sm btn-primary"
+                    >
+                        Follow
+                    </a>
+                {% endif %}
+            </h2>
+
+            <div class="row mt-2" style="font-size: 1.2em">
+                <div class="col-sm-4">
+                    Asignatura = <b>{{ user.profile.signature }}</b>
+                </div>
+                <div class="col-sm-4">
+                    
+                </div>
+                <div class="col-sm-4">
+                    
+                </div>
+            </div>
+            <div class="row mt-4">
+                <div class="col-sm-12">
+                    <h1><p>{{ user.profile.biography }}</p> </h1>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <!-- Cursos -->
+            <h2>Cursos</h2>
+        
+            <!-- Utiliza la clase 'row' para organizar los cursos en filas -->
+            <div class="row">
+        
+                {% for c in cohorte %}
+                <div class="col-md-4">
+                    <div class="card mb-3" style="max-width: 540px;">
+                        <div class="row g-0">
+                            <div class="col-md-4">
+                                <p>Acá puede ir la imagen</p>
+                            </div>
+                            <div class="col-md-8">
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ c.codigoCoh }}</h5>
+                                    <h3 class="card-title">{{ c.nombreCoh }}</h3>
+                                    <p class="card-text">{{ c.descrptionCoh }}</p>
+                                    <p class="card-text"><small class="text-body-secondary">Creado el {{ c.created }}</small></p>
+                                    <p class="card-text"><small class="text-body-secondary">Última actualización {{ c.modified }}</small></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% if forloop.counter|divisibleby:3 %}
+            </div>
+            <div class="row">
+                {% endif %}
+                {% endfor %}
+        
+            </div>
+        </div>
+      
+    </div>
+</div>
+{% endblock %}

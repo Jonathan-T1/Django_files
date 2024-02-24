@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block title %}| Users |{% endblock  %}
 
@@ -27,7 +28,15 @@
             {% for x in user %}
             <tr>
                 <th>{{x.id}}</th>
-                <th>here foto</th>
+                <th class="nav-item">
+                  <a href="">
+                      {% if x.profile.picture %}
+                          <img src="{{ x.profile.picture.url }}" width="45" height="45" class="d-inline-block align-top rounded-circle"/>
+                      {% else %}
+                          <img src="{% static 'img/default-profile.png' %}" width="45" height="45" class="d-inline-block align-top rounded-circle"/>
+                      {% endif %}
+                  </a>
+                </th>
                 <th>{{x.first_name | upper}}<br>{{x.last_name | upper}}</th>
                 <th>{{x.username }}</th>
                 <th>{{x.cedula}}</th>
