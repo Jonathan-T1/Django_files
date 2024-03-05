@@ -51,41 +51,21 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-12">
-            <!-- Cursos -->
-            <h2>Cursos</h2>
-        
-            <!-- Utiliza la clase 'row' para organizar los cursos en filas -->
-            <div class="row">
-        
-                {% for c in cohorte %}
-                <div class="col-md-4">
-                    <div class="card mb-3" style="max-width: 540px;">
-                        <div class="row g-0">
-                            <div class="col-md-4">
-                                <p>Acá puede ir la imagen</p>
-                            </div>
-                            <div class="col-md-8">
-                                <div class="card-body">
-                                    <h5 class="card-title">{{ c.codigoCoh }}</h5>
-                                    <h3 class="card-title">{{ c.nombreCoh }}</h3>
-                                    <p class="card-text">{{ c.descrptionCoh }}</p>
-                                    <p class="card-text"><small class="text-body-secondary">Creado el {{ c.created }}</small></p>
-                                    <p class="card-text"><small class="text-body-secondary">Última actualización {{ c.modified }}</small></p>
-                                </div>
-                            </div>
-                        </div>
+            <div class="col-md-18" style="background-color: #f0f0f0;">
+                <div class=" " style="background-color: #f0f0f0;">
+                    <div class="card-body">
+                        {% if request.user.is_authenticated %}
+                        {% if user.is_Estudiante %}
+                        {% include "teacherandstuden/student.html" %}
+                        {% elif user.is_profesor %}
+                        {% include "teacherandstuden/teacher.html" %}
+                        {% else  %}
+                        {% include "teacherandstuden/admin.html" %}
+                        {% endif %}
+                        {% endif %}
                     </div>
                 </div>
-                {% if forloop.counter|divisibleby:3 %}
-            </div>
-            <div class="row">
-                {% endif %}
-                {% endfor %}
-        
             </div>
         </div>
-      
-    </div>
 </div>
 {% endblock %}

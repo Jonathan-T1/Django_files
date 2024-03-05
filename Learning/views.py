@@ -11,35 +11,10 @@ from django.contrib.auth import authenticate, login
 def home(request):
     return render(request,'composition/home.html')
 
+@login_required
 def profile(request):
     cohorte = Cohorte.objects.all()
     return render(request,'teacherandstuden/profile.html',{'cohorte':cohorte})
-
-@login_required
-def update_profile(request):
-    """Update a user's profile view."""
-    data = {
-        'form': ProfileForm()
-    }
-
-    if request.method == 'POST':
-        user_creation_form = ProfileForm(data=request.POST)
-
-        if user_creation_form.is_valid():
-            user_creation_form.save()
-            
-            # Mensaje de éxito
-            messages.success(request, 'Registro exitoso. ¡Ahora puedes iniciar sesión!')
-
-            return redirect('see_users')
-        else:
-            # Mensaje de error
-            messages.error(request, 'Hubo un error en el formulario. Por favor, corrige los errores.')
-
-            data['form'] = user_creation_form
-
-    return render(request, 'UsersOPS/update_profile.html', data)
-
 
 @login_required
 def Learning(request):
@@ -47,29 +22,6 @@ def Learning(request):
 def exit (request):
     logout(request)
     return redirect ('home')
-
-def register(request):
-    data = {
-        'form': CustumUserCreationForm()
-    }
-
-    if request.method == 'POST':
-        user_creation_form = CustumUserCreationForm(data=request.POST)
-
-        if user_creation_form.is_valid():
-            user_creation_form.save()
-            
-            # Mensaje de éxito
-            messages.success(request, 'Registro exitoso. ¡Ahora puedes iniciar sesión!')
-
-            return redirect('see_users')
-        else:
-            # Mensaje de error
-            messages.error(request, 'Hubo un error en el formulario. Por favor, corrige los errores.')
-
-            data['form'] = user_creation_form
-
-    return render(request, 'UsersOPS/register.html', data)
 
 def datosus (request):
     user = User.objects.all()
@@ -79,12 +31,11 @@ def datosus (request):
     return render(request,'UsersOPS/ver_user.html',data)
 
 def editaruser (request, pk):
-
+    editarrol = get_object_or_404(User, id=pk)
     data = {
-        'form': editarUser(),
-        'title' : 'Editar Rol Usuarios'
+        'form': editarUser(instance=editarrol),
+        'title': 'Editar Usuario'
     }
-    editarrol = User.objects.get(id=pk)
     if request.method == 'POST':
         formeditus = editarUser(data=request.POST, instance=editarrol)
         if formeditus.is_valid():
@@ -204,4 +155,69 @@ def cohorte(request):
     cohorte = Cohorte.objects.all()
     return render(request,'Cohortes/cohortes.html',{'cohorte':cohorte})
 
+def register(request):
+    data = {
+        'form': CustumUserCreationForm()
+    }
 
+    if request.method == 'POST':
+        user_creation_form = CustumUserCreationForm(data=request.POST)
+
+        if user_creation_form.is_valid():
+            user_creation_form.save()
+            
+            # Mensaje de éxito
+            messages.success(request, 'Registro exitoso. ¡Ahora puedes iniciar sesión!')
+
+            return redirect('see_users')
+        else:
+            # Mensaje de error
+            messages.error(request, 'Hubo un error en el formulario. Por favor, corrige los errores.')
+
+            data['form'] = user_creation_form
+
+    return render(request, 'UsersOPS/register.html', data)
+
+def crear_curso(request):
+    data = {
+        'form': CursoForm()
+    }
+
+    if request.method == 'POST':
+        curso_creation_form = CursoForm(data=request.POST)
+
+        if curso_creation_form.is_valid():
+            curso_creation_form.save()
+
+            messages.success(request,'Ha registrado satisfactoriamente el curso')
+            return redirect('profile_overview')
+        else:
+            messages.error(request, 'Hubo un error al crear el curso. Por favor, corrige los errores.')
+
+            data ['form'] = curso_creation_form
+    return render(request,'Cohortes/crear_curso.html',data)
+
+@login_required
+def update_profile(request):
+    """Update a user's profile view."""
+    data = {
+        'form': ProfileForm()
+    }
+
+    if request.method == 'POST':
+        update_profile_form = ProfileForm(data=request.POST)
+
+        if update_profile_form.is_valid():
+            update_profile_form.save()
+            
+            # Mensaje de éxito
+            messages.success(request, 'Se acualizo con exito el perfil')
+
+            return redirect('profile_overview')
+        else:
+            # Mensaje de error
+            messages.error(request, 'Hubo un error en el formulario. Por favor, corrige los errores.')
+
+            data['form'] = update_profile_form
+
+    return render(request, 'UsersOPS/update_profile.html', data)

@@ -1,5 +1,5 @@
 from django import forms
-from .models import User , Task ,Cohorte, Profile,Signature
+from .models import User , Task,Profile,Signature,Cohorte
 from django.contrib.auth.forms import UserCreationForm
 
 
@@ -35,8 +35,14 @@ class CustumUserCreationForm(UserCreationForm):
 class editarUser (forms.ModelForm):
     class Meta:
         model = User
-        fields = ['username', 'first_name','last_name','email','cedula','phone','is_staff','is_profesor','is_Estudiante']
+        fields = ['username', 'first_name', 'last_name', 'email', 'cedula', 'phone', 'is_staff', 'is_profesor', 'is_Estudiante']
 
+    def clean_email(self):
+        email_field = self.cleaned_data['email']
+        if User.objects.filter(email=email_field).exists():
+            raise forms.ValidationError('Este correo electronico ya esta registrado')
+        return email_field
+            
 class TaskForm(forms.ModelForm):
     class Meta:
         model = Task
@@ -53,15 +59,21 @@ class ChangePasswordForm(UserCreationForm):
         model = User
         fields = ['password1','password2']
 
-class cohorte(forms.ModelForm):
+
+
+class CursoForm(forms.ModelForm):
     class Meta:
         model = Cohorte
-        fields = ['codigoCoh','nombreCoh','descrptionCoh','user']
+        fields = ['nombreCoh','descrptionCoh','teacher']
 
-class ProfileForm(forms.Form):
+    """estudiantes = forms.ModelMultipleChoiceField(
+        queryset=User.objects.filter(is_Estudiante=True),
+        widget=forms.CheckboxSelectMultiple,
+        required=False
+    )"""
+
+class ProfileForm(forms.ModelForm):
     """Profile form."""
-    biography = forms.CharField(max_length=500, required=False)
-    picture = forms.ImageField()
     class Meta:
-        model = Signature
-        fields =['signature']
+        model = Profile
+        fields = ['biography','signature','picture']

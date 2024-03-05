@@ -1,5 +1,6 @@
 from django.db import models
-from django.contrib.auth.models import AbstractUser, AbstractBaseUser,PermissionsMixin
+from django.db.models import Q
+from django.contrib.auth.models import AbstractUser, AbstractBaseUser,PermissionsMixin,User
 
 
 class User(AbstractUser,AbstractBaseUser,PermissionsMixin):
@@ -35,14 +36,42 @@ class Task(models.Model):
     
 
 class Cohorte(models.Model):
-    codigoCoh = models.CharField(max_length=50,unique=True)
     nombreCoh = models.CharField(max_length=100)
     descrptionCoh = models.TextField(blank=True)
     created = models.DateTimeField(auto_now_add=True)
     modified = models.DateTimeField(auto_now=True)
     delted = models.DateTimeField(null=True,blank=True)
-    user  = models.ForeignKey(User, on_delete=models.CASCADE)
+    teacher  = models.ForeignKey(User,
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True,
+        limit_choices_to=Q(is_profesor=True)
+        )
     status = models.BooleanField(default=False)
+    def codCoh(self):
+        return "{} ".format(self.nombreCoh)
+    
+    def __str__(self):
+        return self.codCoh()
+
+class Registration(models.Model):
+    course = models.ForeignKey(Cohorte, 
+        on_delete=models.CASCADE,
+        verbose_name='Curso'
+        )
+    student = models.ForeignKey(User,
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True,
+        related_name='students_registration',
+        limit_choices_to=Q(is_Estudiante=True),
+        verbose_name='Estudiante'
+        )
+    def __str__(self):
+        return f'{self.student.username} - {self.course.nombreCoh}'
+    class Meta:
+        verbose_name = 'Inscripcion'
+        verbose_name_plural = 'Inscripciones'
 
 class Signature(models.Model):
     nameSignature = models.CharField(max_length=60)

@@ -30,7 +30,7 @@
             type="text" 
             name = "first_name"  
             placeholder="Intruduzca su nombre "
-            value="{% if form.errors %}{{ form.first_name.value }}{% else %}{{ user.first_name}}{% endif %}"
+            value="{% if form.errors %}{{ form.first_name.value }}{% else %}{{ editarrol.first_name }}{% endif %}"
             required/>
           <div class="invalid-feedback">
               {% for error in form.first_name.errors %}
@@ -48,7 +48,7 @@
             type="text" 
             name = "last_name"  
             placeholder="Intruduzca su Apellido"
-            value="{% if form.errors %}{{ form.last_name.value }}{% else %}{{ user.last_name}}{% endif %}"
+            value="{% if form.errors %}{{ form.last_name.value }}{% else %}{{ editarrol.last_name }}{% endif %}"
             required/>
             <div class="invalid-feedback">
                 {% for error in form.last_name.errors %}
@@ -66,7 +66,7 @@
             type="text" 
             name = "cedula"  
             placeholder="Intruduzca su Cedula"
-            value="{% if form.errors %}{{ form.cedula.value }}{% else %}{{ user.cedula}}{% endif %}"
+            value="{% if form.errors %}{{ form.cedula.value }}{% else %}{{ editarrol.cedula }}{% endif %}"
             required/>
           <div class="invalid-feedback">
               {% for error in form.cedula.errors %}
@@ -84,7 +84,7 @@
             type="email" 
             name = "email"  
             placeholder="Intruduzca su email"
-            value="{% if form.errors %}{{ form.email.value }}{% else %}{{ user.email}}{% endif %}"
+            value="{% if form.errors %}{{ form.email.value }}{% else %}{{ editarrol.email }}{% endif %}"
             required/>
           <div class="invalid-feedback">
               {% for error in form.email.errors %}
@@ -104,7 +104,7 @@
               type="username" 
               name = "username"  
               placeholder="Intruduzca su nombre de Usuario"
-              value="{% if form.errors %}{{ form.username.value }}{% else %}{{ user.username}}{% endif %}"
+              value="{% if form.errors %}{{ form.username.value }}{% else %}{{ editarrol.username }}{% endif %}"
               required/>
             <div class="invalid-feedback">
               {% for error in form.username.errors %}
@@ -123,7 +123,7 @@
               type="text" 
               name = "phone"  
               placeholder=""
-              value="{% if form.errors %}{{ form.phone.value }}{% else %}{{ user.usephonername}}{% endif %}"
+              value="{% if form.errors %}{{ form.phone.value }}{% else %}{{ editarrol.phone }}{% endif %}"
               required/>
               <div class="invalid-feedback">
                 {% for error in form.phone.errors %}
@@ -153,18 +153,7 @@
         <div class="col-12">
             <button class="btn btn-sm btn-primary float-center" type="submit">Editar Usuario</button>
         </div>
-        </div>
-
-    
-     
-    
-    {#{% if form.errors %}#}
-      {#<ul class="errorlist">#}
-        {#{% for field, errors in form.errors.items %}#}
-            {#<li>{{ field }}: {{ errors.0 }}</li>#}
-        {#{% endfor %}#}
-      {#</ul>#}
-    {#{% endif %}#}  
+        </div> 
     </form>
 </div>
 {{ block.super }}

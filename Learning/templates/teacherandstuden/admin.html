@@ -1,0 +1,36 @@
+<div class="col-md-12">
+    <h2>Cursos</h2>
+
+ 
+    <div class="row" >
+
+        {% for c in cohorte %}
+        
+        <div class="col-md-4">
+            <div class="card mb-3" style="max-width: 540px;">
+                <div class="row g-0">                   
+                    <div class="col-md-4">
+                        <p>Acá puede ir la imagen</p>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ c.codigoCoh }}</h5>
+                            <h3 class="card-title">{{ c.nombreCoh }}</h3>
+                            <p class="card-text">{{ c.descrptionCoh }}</p>
+                            <p class="card-text"><small class="text-body-secondary">Creado el {{ c.created }}</small></p>
+                            <p class="card-text"><small class="text-body-secondary">Última actualización {{ c.modified }}</small></p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        {% if forloop.counter|divisibleby:3 %}
+        </div>
+        <div class="row">
+        {% endif %}
+
+        {% endfor %}
+
+    </div>
+</div>
