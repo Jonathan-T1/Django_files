@@ -1,5 +1,5 @@
 from django import forms
-from .models import User , Task,Profile,Signature,Cohorte
+from .models import User , Task,Profile,Cohorte
 from django.contrib.auth.forms import UserCreationForm
 
 
@@ -76,4 +76,4 @@ class ProfileForm(forms.ModelForm):
     """Profile form."""
     class Meta:
         model = Profile
-        fields = ['biography','signature','picture']
+        fields = ['picture','biography','address']

@@ -4,7 +4,7 @@ from django.contrib.auth.models import AbstractUser, AbstractBaseUser,Permission
 
 
 class User(AbstractUser,AbstractBaseUser,PermissionsMixin):
-    cedula = models.CharField(max_length=11,unique=True, verbose_name='Cedula', blank=False, help_text=(
+    cedula = models.CharField(max_length=11,unique=True, verbose_name='Cedula',blank=True, help_text=(
         "Obligatorio. Digite su nemero de Cedula completo. Unicamente numeros. Sin puntos ni comas"
     ))
     phone = models.CharField(max_length=10, verbose_name='Celuar', blank=False, help_text=(
@@ -73,21 +73,10 @@ class Registration(models.Model):
         verbose_name = 'Inscripcion'
         verbose_name_plural = 'Inscripciones'
 
-class Signature(models.Model):
-    nameSignature = models.CharField(max_length=60)
-
-    def signature(self):
-        return "{} ".format(self.nameSignature)
-    
-    def __str__(self) :
-        return self.signature()
-
-
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     biography = models.TextField(blank=True)
-    signature = models.ForeignKey(Signature, on_delete=models.CASCADE)
-
+    address = models.CharField(max_length=100,null=True,blank=True)
     picture = models.ImageField(
         upload_to='users/pictures',
         blank=True,

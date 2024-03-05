@@ -51,21 +51,21 @@
   <div class="col-md-4">
     <label for="validatelastname01" class="form-label">Cedula</label>
     <input 
-          class="form-control {% if form.cedula.errors %}is-invalid{% endif %}"
-          type="text" 
-          name = "cedula"  
-          placeholder="Intruduzca su nombre de Usuario"
-          value="{% if form.errors %}{{ form.cedula.value }}{% else %}{{ user.cedula}}{% endif %}"
-          required/>
-        <div class="invalid-feedback">
-            {% for error in form.cedula.errors %}
-              {{ error }}
-            {% endfor %}
-        </div>
-    <div class="valid-feedback">
-      Luce muy bien!
+        class="form-control {% if form.cedula.errors %}is-invalid{% endif %}"
+        type="text" 
+        name="cedula"  
+        placeholder="Introduzca su cédula"
+        value="{% if form.errors %}{{ form.cedula.value }}{% else %}{{ user.cedula|default:'' }}{% endif %}"
+        required/>
+    <div class="invalid-feedback">
+        {% for error in form.cedula.errors %}
+            {{ error }}
+        {% endfor %}
     </div>
-  </div>
+    <div class="valid-feedback">
+        Luce muy bien!
+    </div>
+    </div>
     <div class="col-12">
       <label for="validationCustomUsername" class="form-label">Nombre de usuario</label>
       <div class="input-group has-validation">
