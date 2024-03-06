@@ -14,10 +14,15 @@ urlpatterns = [
     path('ResetPassword/<int:pk>/',Cambiar_contraseña,name='reset_password'),
     path('editaruser/<int:pk>/', editaruser, name='edit_user'),
     path('delete/<int:pk>/',delete_user,name='delete_user'),
+    
+#This are the profiles urls 
     path('users/me/profile/',update_profile,name='update_profile'),
     path('profile/overview/',profile,name='profile_overview'),
+
+#This are the Curses urls
     path('cohorte/',cohorte, name='cohortes'),
     path('crear/curso/',crear_curso,name='crear_curso'),
+
 #This are the task that Cesar did 
     path('tasks/', tasks, name="tasks"),
     path('tasks_completed/', tasks_completed, name="tasks_completed"),

@@ -72,8 +72,8 @@ class CursoForm(forms.ModelForm):
         required=False
     )"""
 
-class ProfileForm(forms.ModelForm):
+class ProfileForm(forms.Form):
     """Profile form."""
-    class Meta:
-        model = Profile
-        fields = ['picture','biography','address']
+    biography = forms.CharField(max_length=500,required=False)
+    address = forms.CharField(max_length=100,required=False)
+    picture = forms.ImageField()

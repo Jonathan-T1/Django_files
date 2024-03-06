@@ -5,6 +5,7 @@ from django.contrib.auth import logout
 from .forms import *
 from django.utils import timezone
 from django.contrib.auth import authenticate, login
+from django.views.generic import DetailView
 
 # Create your views here.
 
@@ -200,24 +201,28 @@ def crear_curso(request):
 @login_required
 def update_profile(request):
     """Update a user's profile view."""
-    data = {
-        'form': ProfileForm()
-    }
+    profile = request.user.profile
 
     if request.method == 'POST':
-        update_profile_form = ProfileForm(data=request.POST)
+        form = ProfileForm(request.POST, request.FILES)
+        if form.is_valid():
+            data = form.cleaned_data
 
-        if update_profile_form.is_valid():
-            update_profile_form.save()
-            
-            # Mensaje de éxito
-            messages.success(request, 'Se acualizo con exito el perfil')
+            profile.biography = data ['biography']
+            profile.address = data ['address']
+            profile.picture = data ['picture']
+            profile.save()
 
             return redirect('profile_overview')
-        else:
-            # Mensaje de error
-            messages.error(request, 'Hubo un error en el formulario. Por favor, corrige los errores.')
-
-            data['form'] = update_profile_form
-
-    return render(request, 'UsersOPS/update_profile.html', data)
+        
+    else:
+        form = ProfileForm()
+    return render(
+        request=request,
+        template_name='UsersOPS/update_profile.html',
+        context={
+            'profile': profile,
+            'user': request.user,
+            'form': form
+        }
+    )
