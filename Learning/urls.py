@@ -14,10 +14,11 @@ urlpatterns = [
     path('ResetPassword/<int:pk>/',Cambiar_contraseña,name='reset_password'),
     path('editaruser/<int:pk>/', editaruser, name='edit_user'),
     path('delete/<int:pk>/',delete_user,name='delete_user'),
-    
+
 #This are the profiles urls 
     path('users/me/profile/',update_profile,name='update_profile'),
-    path('profile/overview/',profile,name='profile_overview'),
+    path('users/<str:username>/',UserDetailView.as_view(),name='detail'),
+    path('learning/overview/',profile,name='learning_overview'),
 
 #This are the Curses urls
     path('cohorte/',cohorte, name='cohortes'),

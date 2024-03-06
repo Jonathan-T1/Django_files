@@ -213,7 +213,7 @@ def update_profile(request):
             profile.picture = data ['picture']
             profile.save()
 
-            return redirect('profile_overview')
+            return redirect('learning_overview')
         
     else:
         form = ProfileForm()
@@ -226,3 +226,10 @@ def update_profile(request):
             'form': form
         }
     )
+
+class UserDetailView(DetailView):
+    """User datail view."""
+    template_name = 'teacherandstuden/profile.html'
+    slug_field ='username'
+    slug_url_kwarg = 'username'
+    queryset = User.objects.all()
