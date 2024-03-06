@@ -36,6 +36,11 @@ class Task(models.Model):
     
 
 class Cohorte(models.Model):
+    STATUS_CHOICES = (
+        ('I', 'Inscripciónes Abiertas'),
+        ('P', 'En Progreso'),
+        ('F', 'Finalizado'),
+    )
     nombreCoh = models.CharField(max_length=100)
     descrptionCoh = models.TextField(blank=True)
     created = models.DateTimeField(auto_now_add=True)
@@ -47,7 +52,7 @@ class Cohorte(models.Model):
         blank=True,
         limit_choices_to=Q(is_profesor=True)
         )
-    status = models.BooleanField(default=False)
+    status = models.CharField(max_length=1, choices=STATUS_CHOICES, default='I', verbose_name='Estado')
     def codCoh(self):
         return "{} ".format(self.nombreCoh)
     

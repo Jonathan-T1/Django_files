@@ -21,7 +21,7 @@ urlpatterns = [
     path('learning/overview/',profile,name='learning_overview'),
 
 #This are the Curses urls
-    path('cohorte/',cohorte, name='cohortes'),
+    path('cursos/',CoursesView.as_view(), name='cursos'),
     path('crear/curso/',crear_curso,name='crear_curso'),
 
 #This are the task that Cesar did 

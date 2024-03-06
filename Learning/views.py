@@ -1,11 +1,13 @@
+from typing import Any
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.contrib.auth import logout
 from .forms import *
+from .models import Registration
 from django.utils import timezone
 from django.contrib.auth import authenticate, login
-from django.views.generic import DetailView
+from django.views.generic import DetailView,TemplateView
 
 # Create your views here.
 
@@ -20,6 +22,7 @@ def profile(request):
 @login_required
 def Learning(request):
     return render(request,'composition/learning.html')
+
 def exit (request):
     logout(request)
     return redirect ('home')
@@ -152,10 +155,6 @@ def delete_task(request, task_id): #Eliminar Tarea
         task.delete()
         return redirect ('tasks')
     
-def cohorte(request):
-    cohorte = Cohorte.objects.all()
-    return render(request,'Cohortes/cohortes.html',{'cohorte':cohorte})
-
 def register(request):
     data = {
         'form': CustumUserCreationForm()
@@ -191,7 +190,7 @@ def crear_curso(request):
             curso_creation_form.save()
 
             messages.success(request,'Ha registrado satisfactoriamente el curso')
-            return redirect('profile_overview')
+            return redirect('cursos')
         else:
             messages.error(request, 'Hubo un error al crear el curso. Por favor, corrige los errores.')
 
@@ -233,3 +232,24 @@ class UserDetailView(DetailView):
     slug_field ='username'
     slug_url_kwarg = 'username'
     queryset = User.objects.all()
+
+class CoursesView(TemplateView):
+    template_name = 'Cohortes/cursos.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        courses = Cohorte.objects.all()
+        student = self.request.user if self.request.user.is_authenticated else None
+
+        for item in courses:
+            if student:
+                registration = Registration.objects.filter(course= item,student=student).first()
+                item.is_enrolled = registration is not None
+            else:
+                item.is_enrolled = False
+
+            enrollment_count = Registration.objects.filter(course=item).count()
+            item.enrollment_count = enrollment_count
+
+        context['courses'] = courses
+        return context

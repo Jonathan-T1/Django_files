@@ -1,8 +1,8 @@
 {% load static %}
-<div class="fixed-top">
+<div class="">
   {% if request.user.is_authenticated %}
   {% if user.is_profesor %}
-    <nav class="navbar navbar-dark bg-success">
+    <nav class="navbar navbar-dark bg-success ">
       <div class="container-fluid" >
         <a class="navbar-brand" href={% url 'learning_overview' %}>Learning You</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar" aria-label="Toggle navigation">
@@ -39,10 +39,10 @@
               <a class="nav-link active" aria-current="page" href={% url 'home' %}>Home</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link active" href={% url 'Learning' %}>Learning</a>
+              <a class="nav-link active" href={% url 'learning_overview' %}>Learning</a>
             </li>
   {% else %}
-  <nav class="navbar navbar-dark bg-secondary">
+  <nav class="navbar navbar-dark bg-secondary ">
     <div class="container-fluid" >
       <a class="navbar-brand" href={% url 'learning_overview' %}>Learning You</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar" aria-label="Toggle navigation">
@@ -73,7 +73,7 @@
                   <li>
                     <hr class="dropdown-divider">
                   </li>
-                  <li><a class="dropdown-item" href={% url 'cohortes' %}>Cohorte</a></li>
+                  <li><a class="dropdown-item" href={% url 'cursos' %}>Cursos</a></li>
                   <li>
                     <hr class="dropdown-divider">
                   </li>
@@ -148,6 +148,8 @@
           <li class="nav-item">
             <a class="nav-link active" href={% url 'exit' %}>Log out</a>
           </li>
+          <li><a class="dropdown-item" href={% url 'cursos' %}>Cursos</a></li>
+                  <li>
             {% else %}
             {% endif %}
             {% else %}

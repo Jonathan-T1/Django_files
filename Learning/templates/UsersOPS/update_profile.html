@@ -6,10 +6,41 @@
 {% endblock %}
 
 {% block content %}
+<div>
+  
+</div>
+<br>
+<div class="container my-4">
+  <div class="row">
+      <div class="col ">
+          <h2>Actualizar Perfil</h2>
+      </div>
+      <div class="col">
+
+      </div>
+  </div>
+
+  <hr>
+  <div>
+  
+  </div>
+  <br>
+
+  <!-- sección de mensajes -->
+  {% if messages %}
+      <div class="container mt-3">
+          {% for message in messages %}
+              <div class="alert alert-success" role="alert">
+                  {{ message }}
+              </div>
+          {% endfor %}
+      </div>
+  {% endif %}
 
 <div class="container" >
 
-    <div class="row justify-content-md-center">
+    <div class="row justify-content-md-center" >
+        
         <div class="col-6 p-4 border rounded shadow-lg" id="profile-box">
 
             <form action="{% url 'update_profile' %}" method="POST" enctype="multipart/form-data">
@@ -69,5 +100,9 @@
         </div>
     </div>
 </div>
+<br><br><br>
+<div>    
+</div>
+<hr>
 
 {% endblock %}
