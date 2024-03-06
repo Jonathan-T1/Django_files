@@ -1,17 +1,16 @@
+{% load static %}
 <div class="col-md-12">
     <h2>Cursos</h2>
 
  
-    <div class="row" >
+    <div class="row " >
 
         {% for c in cohorte %}
         
         <div class="col-md-4">
-            <div class="card mb-3" style="max-width: 540px;">
+            <div class="card mb-3 border rounded shadow-lg" style="max-width: 540px;">
                 <div class="row g-0">                   
-                    <div class="col-md-4">
-                        <p>Acá puede ir la imagen</p>
-                    </div>
+                    
                     <div class="col-md-8">
                         <div class="card-body">
                             <h5 class="card-title">{{ c.codigoCoh }}</h5>
