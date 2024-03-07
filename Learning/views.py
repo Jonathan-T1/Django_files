@@ -64,12 +64,16 @@ def editaruser (request, pk):
 
 @login_required
 def delete_user(request, pk):
-    user = get_object_or_404(User, id=pk)
+    if request.user.is_staff:
+        user = get_object_or_404(User, id=pk)
 
-    if request.method == 'POST':
-        user.delete()
-        return redirect('see_users')
-    return render(request,'UsersOPS/delete_user.html',{'user':user})
+        if request.method == 'POST':
+            user.delete()
+            return redirect('see_users')
+        return render(request,'UsersOPS/delete_user.html',{'user':user})
+    else:
+        messages.error(request, '!UPS! No tienes Acesso a esa funcion.')
+        return redirect('learning_overview')
 
 def Cambiar_contraseña(request,pk):
     data={
@@ -191,24 +195,27 @@ def register(request):
 
 @login_required
 def crear_curso(request):
-    data = {
-        'form': CursoForm()
-    }
+    if request.user.is_staff:
+        data = {
+            'form': CursoForm()
+        }
 
-    if request.method == 'POST':
-        curso_creation_form = CursoForm(data=request.POST)
+        if request.method == 'POST':
+            curso_creation_form = CursoForm(data=request.POST)
 
-        if curso_creation_form.is_valid():
-            curso_creation_form.save()
+            if curso_creation_form.is_valid():
+                curso_creation_form.save()
 
-            messages.success(request,'Ha registrado satisfactoriamente el curso')
-            return redirect('cursos')
-        else:
-            messages.error(request, 'Hubo un error al crear el curso. Por favor, corrige los errores.')
+                messages.success(request,'Ha registrado satisfactoriamente el curso')
+                return redirect('cursos')
+            else:
+                messages.error(request, 'Hubo un error al crear el curso. Por favor, corrige los errores.')
 
-            data ['form'] = curso_creation_form
-    return render(request,'Cohortes/crear_curso.html',data)
-
+                data ['form'] = curso_creation_form
+        return render(request,'Cohortes/crear_curso.html',data)
+    else:
+        messages.error(request, '!UPS! No tienes Acesso a esa funcion.')
+        return redirect('learning_overview')
 @login_required
 def update_profile(request):
     """Update a user's profile view."""

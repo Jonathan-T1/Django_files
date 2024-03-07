@@ -62,9 +62,10 @@ class ChangePasswordForm(UserCreationForm):
 
 
 class CursoForm(forms.ModelForm):
+    descrptionCoh = forms.CharField(widget=forms.Textarea(attrs={'rows':3}), label='Descripción')
     class Meta:
         model = Cohorte
-        fields = ['nombreCoh','descrptionCoh','teacher']
+        fields = ['nombreCoh','descrptionCoh','teacher','status']
 
     """estudiantes = forms.ModelMultipleChoiceField(
         queryset=User.objects.filter(is_Estudiante=True),

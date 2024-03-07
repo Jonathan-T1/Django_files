@@ -51,18 +51,18 @@
               {% if x.is_staff %}
               <td>Administrador</td>
                   <td>
-                      THIS USER CAN'T BE DELETED OR EDIT BY A NORMAL ADMIN
+                      THIS USER CAN'T BE DELETED OR <br> EDIT BY A NORMAL ADMIN
                   </td>
               {% elif x.is_profesor %}
               <td>Profesor</td>
               <td>
-                  <a href={% url "edit_user" x.id %} class="btn btn-warning btn-sm"><i class= "bi bi-pencil-square"></i> Edit</a>
+                  <a href={% url "edit_user" x.id %} class="btn btn-warning " type="button"><i class= "bi bi-pencil-square"></i> Edit</a>
                   <a href={% url "delete_user" x.id %} class="btn btn-danger"><i class="bi bi-trash"></i> Delete</a>
               </td>
               {% else  %}
               <td>Estudiante</td>
               <td>
-                  <a href={% url "edit_user" x.id %} class="btn btn-warning btn-sm"><i class= "bi bi-pencil-square"></i> Edit</a>
+                  <a href={% url "edit_user" x.id %} class="btn btn-warning "><i class= "bi bi-pencil-square"></i> Edit</a>
                   <a href={% url "delete_user" x.id %} class="btn btn-danger"><i class="bi bi-trash"></i> Delete</a>
               </td>
               {% endif %}
