@@ -27,13 +27,19 @@ def exit (request):
     logout(request)
     return redirect ('home')
 
+@login_required
 def datosus (request):
-    user = User.objects.all()
-    data = {
-        'user': user,
-    }
-    return render(request,'UsersOPS/ver_user.html',data)
+    if request.user.is_staff:
+        user = User.objects.all()
+        data = {
+            'user': user,
+        }
+        return render(request,'UsersOPS/ver_user.html',data)
+    else:
+        messages.error(request, '!UPS! No tienes Acesso a esa funcion.')
+        return redirect('learning_overview')
 
+@login_required    
 def editaruser (request, pk):
     editarrol = get_object_or_404(User, id=pk)
     data = {
@@ -56,6 +62,7 @@ def editaruser (request, pk):
 
     return render(request, 'UsersOPS/editaruser.html', data)
 
+@login_required
 def delete_user(request, pk):
     user = get_object_or_404(User, id=pk)
 
@@ -155,29 +162,34 @@ def delete_task(request, task_id): #Eliminar Tarea
         task.delete()
         return redirect ('tasks')
     
+@login_required    
 def register(request):
-    data = {
-        'form': CustumUserCreationForm()
-    }
+    if request.user.is_staff:
+        data = {
+            'form': CustumUserCreationForm()
+        }
 
-    if request.method == 'POST':
-        user_creation_form = CustumUserCreationForm(data=request.POST)
+        if request.method == 'POST':
+            user_creation_form = CustumUserCreationForm(data=request.POST)
 
-        if user_creation_form.is_valid():
-            user_creation_form.save()
+            if user_creation_form.is_valid():
+                user_creation_form.save()
             
-            # Mensaje de éxito
-            messages.success(request, 'Registro exitoso. ¡Ahora puedes iniciar sesión!')
+                # Mensaje de éxito
+                messages.success(request, 'Registro exitoso. ¡Ahora puedes iniciar sesión!')
 
-            return redirect('see_users')
-        else:
-            # Mensaje de error
-            messages.error(request, 'Hubo un error en el formulario. Por favor, corrige los errores.')
+                return redirect('see_users')
+            else:
+                # Mensaje de error
+                messages.error(request, 'Hubo un error en el formulario. Por favor, corrige los errores.')
 
-            data['form'] = user_creation_form
+                data['form'] = user_creation_form
 
-    return render(request, 'UsersOPS/register.html', data)
+        return render(request, 'UsersOPS/register.html', data)
+    else:
+        return redirect('learning_overview')
 
+@login_required
 def crear_curso(request):
     data = {
         'form': CursoForm()
@@ -233,9 +245,10 @@ class UserDetailView(DetailView):
     slug_url_kwarg = 'username'
     queryset = User.objects.all()
 
+
 class CoursesView(TemplateView):
     template_name = 'Cohortes/cursos.html'
-
+    
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         courses = Cohorte.objects.all()
