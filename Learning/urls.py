@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import path,include
 from .views import *
 from django.conf import settings
 from django.contrib.staticfiles.urls import static
@@ -36,4 +36,6 @@ urlpatterns = [
     path('tasks/<int:task_id>/', tasks_detail, name="tasks_detail"),   #Espera parametros
     path('tasks/<int:task_id>/complete/', complete_task, name="complete_task"), #Espera parametros
     path('tasks/<int:task_id>/delete/', delete_task, name="delete_task"), #Espera parametros
+    path('tasks/',include(('Task.urls','Task'),namespace='Task')),
+
 ] +static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
