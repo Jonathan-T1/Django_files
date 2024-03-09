@@ -72,8 +72,8 @@
                       {% endif %}
 
                       {% if request.user.is_staff %}
-                          <a class="btn btn-sm btn-warning" href="">Editar</a>
-                          <a class="btn btn-sm btn-danger" href="">Eliminar</a>
+                          <a class="btn btn-sm btn-warning" href="{% url 'editar_curso' course.id %}">Editar</a>
+                          <a class="btn btn-sm btn-danger" href="{% url 'borrar_curso' course.id %}">Eliminar</a>
                       {% endif %}
                   </div>
               </div>

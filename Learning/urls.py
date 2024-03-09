@@ -2,6 +2,7 @@ from django.urls import path
 from .views import *
 from django.conf import settings
 from django.contrib.staticfiles.urls import static
+from django.contrib.auth.decorators import login_required
 
 
 
@@ -21,8 +22,12 @@ urlpatterns = [
     path('learning/overview/',profile,name='learning_overview'),
 
 #This are the Curses urls
-    path('cursos/',CoursesView.as_view(), name='cursos'),
+    path('cursos/',login_required(CoursesView.as_view()), name='cursos'),
     path('crear/curso/',crear_curso,name='crear_curso'),
+    path('curso/<int:pk>/edit/',login_required(CourseEditView.as_view()),name='editar_curso'),
+    path('curso/<int:pk>/delete',login_required(CourseDeleteView.as_view()),name='borrar_curso'),
+    path('error/',login_required(ErrorView.as_view()),name='error'),
+    
 
 #This are the task that Cesar did 
     path('tasks/', tasks, name="tasks"),

@@ -33,7 +33,6 @@ class Task(models.Model):
 
     def __str__(self):
         return self.title+" - usuario: "+self.user.username
-    
 
 class Cohorte(models.Model):
     STATUS_CHOICES = (
@@ -94,3 +93,24 @@ class Profile(models.Model):
     def __str__(self):
         """Return username."""
         return self.user.username
+
+
+
+
+
+
+
+
+
+
+"""
+class Cursos(models.Model):
+    nombre = models.CharField(max_length=100)
+    description = models.TextField(blank=True,max_length=500)
+    students = models.ForeignKey(User, on_delete=models.CASCADE,
+        null=True,
+        blank=True,
+        limit_choices_to=Q(is_Estudiante=True)
+        )
+    lecciones = models.ForeignKey(Cohorte,on_delete=models.CASCADE,null= True,blank=True)
+"""

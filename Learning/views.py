@@ -1,13 +1,21 @@
 from typing import Any
+from django.forms.models import BaseModelForm
+from django.http import HttpResponse
+from django.http.response import HttpResponseRedirect
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.contrib.auth import logout
+from django.urls import reverse_lazy
 from .forms import *
 from .models import Registration
 from django.utils import timezone
 from django.contrib.auth import authenticate, login
-from django.views.generic import DetailView,TemplateView
+from django.views.generic import DetailView,TemplateView,UpdateView,DeleteView
+from django.contrib.auth.mixins import UserPassesTestMixin
+from django.conf import settings
+import os
+
 
 # Create your views here.
 
@@ -16,7 +24,7 @@ def home(request):
 
 @login_required
 def profile(request):
-    cohorte = Cohorte.objects.all()
+    cohorte = Cohorte.objects.all().order_by('-id')
     return render(request,'teacherandstuden/profile.html',{'cohorte':cohorte})
 
 @login_required
@@ -36,32 +44,33 @@ def datosus (request):
         }
         return render(request,'UsersOPS/ver_user.html',data)
     else:
-        messages.error(request, '!UPS! No tienes Acesso a esa funcion.')
-        return redirect('learning_overview')
+        return redirect('error')
 
 @login_required    
 def editaruser (request, pk):
-    editarrol = get_object_or_404(User, id=pk)
-    data = {
-        'form': editarUser(instance=editarrol),
-        'title': 'Editar Usuario'
-    }
-    if request.method == 'POST':
-        formeditus = editarUser(data=request.POST, instance=editarrol)
-        if formeditus.is_valid():
-            formeditus.save()
+    if request.user.is_staff:
+        editarrol = get_object_or_404(User, id=pk)
+        data = {
+            'form': editarUser(instance=editarrol),
+            'title': 'Editar Usuario'
+        }
+        if request.method == 'POST':
+            formeditus = editarUser(data=request.POST, instance=editarrol)
+            if formeditus.is_valid():
+                formeditus.save()
 
-            messages.success(request, 'Se Edito el Usuario Satisfactoriamente!')
+                messages.success(request, 'Se Edito el Usuario Satisfactoriamente!')
 
-            return redirect('see_users') 
-        else:
-            # Mensaje de error
-            messages.error(request, 'Hubo un error en el formulario. Por favor, corrige los errores.')
+                return redirect('see_users') 
+            else:
+                # Mensaje de error
+                messages.error(request, 'Hubo un error en el formulario. Por favor, corrige los errores.')
 
-            data['form'] = formeditus           
+                data['form'] = formeditus           
 
-    return render(request, 'UsersOPS/editaruser.html', data)
-
+        return render(request, 'UsersOPS/editaruser.html', data)
+    else:
+        return redirect('error')
 @login_required
 def delete_user(request, pk):
     if request.user.is_staff:
@@ -72,8 +81,7 @@ def delete_user(request, pk):
             return redirect('see_users')
         return render(request,'UsersOPS/delete_user.html',{'user':user})
     else:
-        messages.error(request, '!UPS! No tienes Acesso a esa funcion.')
-        return redirect('learning_overview')
+        return redirect('error')
 
 def Cambiar_contraseña(request,pk):
     data={
@@ -191,7 +199,7 @@ def register(request):
 
         return render(request, 'UsersOPS/register.html', data)
     else:
-        return redirect('learning_overview')
+        return redirect('error')
 
 @login_required
 def crear_curso(request):
@@ -206,7 +214,6 @@ def crear_curso(request):
             if curso_creation_form.is_valid():
                 curso_creation_form.save()
 
-                messages.success(request,'Ha registrado satisfactoriamente el curso')
                 return redirect('cursos')
             else:
                 messages.error(request, 'Hubo un error al crear el curso. Por favor, corrige los errores.')
@@ -214,8 +221,7 @@ def crear_curso(request):
                 data ['form'] = curso_creation_form
         return render(request,'Cohortes/crear_curso.html',data)
     else:
-        messages.error(request, '!UPS! No tienes Acesso a esa funcion.')
-        return redirect('learning_overview')
+        return redirect('error')
 @login_required
 def update_profile(request):
     """Update a user's profile view."""
@@ -252,13 +258,21 @@ class UserDetailView(DetailView):
     slug_url_kwarg = 'username'
     queryset = User.objects.all()
 
+class ErrorView(TemplateView):
+    template_name = 'composition/error_page.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        error_image_path = os.path.join(settings.MEDIA_URL,'error.jpg')
+        context ['error_image_path'] = error_image_path
+        return context
 
 class CoursesView(TemplateView):
     template_name = 'Cohortes/cursos.html'
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        courses = Cohorte.objects.all()
+        courses = Cohorte.objects.all().order_by('-id')
         student = self.request.user if self.request.user.is_authenticated else None
 
         for item in courses:
@@ -273,3 +287,41 @@ class CoursesView(TemplateView):
 
         context['courses'] = courses
         return context
+    """
+    def handle_no_permission(self):
+        return redirect('error_page')"""
+    
+class CourseEditView(UserPassesTestMixin,UpdateView):
+    model = Cohorte
+    form_class = CursoForm
+    template_name = 'Cohortes/edit_curso.html'
+
+    def test_func(self):
+        return self.request.user.is_staff
+    
+    def handle_no_permission(self):
+        return redirect('error')
+    
+    def form_valid(self, form):
+        form.save()
+        messages.success(self.request,'la actualizacion del curso se ha echo satisfactoriamente')
+        return redirect('cursos')
+    
+    def form_invalid(self, form):
+        messages.error(self.request,'Ha ocurrido un error al actualizar el curso')
+        return self.render_to_response(self.get_context_data(form=form))    
+    
+class CourseDeleteView(UserPassesTestMixin,DeleteView):
+    model = Cohorte
+    template_name = 'Cohortes/delete_curso.html'
+    success_url = reverse_lazy("cursos")
+
+    def test_func(self):
+        return self.request.user.is_staff
+    
+    def handle_no_permission(self):
+        return redirect('error')
+    
+    def form_valid(self, form):
+        messages.success(self.request,'Se ha logrado borrar al curso satisfactoriamente')
+        return super().form_valid(form)

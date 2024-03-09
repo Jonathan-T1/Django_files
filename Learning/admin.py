@@ -1,6 +1,7 @@
 from django.contrib import admin
 from .models import User ,Task, Cohorte,Profile,Registration
 
+
 # Register your models here.
 
 admin.site.register(User),
@@ -17,3 +18,14 @@ admin.site.register(Registration,ResgistracionAdmin),
 
 admin.site.register(Profile),
 admin.site.register(Task),
+
+
+
+
+    
+"""
+class CursoAdmin(admin.ModelAdmin):
+    list_display=('nombre','lecciones')
+    list_filter=('nombre','lecciones')
+admin.site.register(Cursos,CursoAdmin),
+"""
