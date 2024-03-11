@@ -1,5 +1,5 @@
 from django import forms
-from .models import User , Task,Profile,Cohorte
+from .models import User,Cohorte
 from django.contrib.auth.forms import UserCreationForm
 
 
@@ -43,23 +43,10 @@ class editarUser (forms.ModelForm):
             raise forms.ValidationError('Este correo electronico ya esta registrado')
         return email_field
             
-class TaskForm(forms.ModelForm):
-    class Meta:
-        model = Task
-        fields = ['title', 'description', 'important']
-            #Modificar datos del form
-        widgets = {
-            'title':forms.TextInput(attrs={'class':'form-control', 'placeholder':'Write a title'}),
-            'description':forms.Textarea(attrs={'class':'form-control', 'placeholder':'Write a description'}),
-            'important':forms.CheckboxInput(attrs={'class':'form-check-input m-auto'})
-        }
-
 class ChangePasswordForm(UserCreationForm):
     class Meta:
         model = User
         fields = ['password1','password2']
-
-
 
 class CursoForm(forms.ModelForm):
     descrptionCoh = forms.CharField(widget=forms.Textarea(attrs={'rows':3}), label='Descripción')

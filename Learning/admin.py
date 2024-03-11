@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import User ,Task, Cohorte,Profile,Registration
+from .models import User, Cohorte,Profile,Registration
 
 
 # Register your models here.
@@ -17,7 +17,7 @@ class ResgistracionAdmin(admin.ModelAdmin):
 admin.site.register(Registration,ResgistracionAdmin),
 
 admin.site.register(Profile),
-admin.site.register(Task),
+
 
 
 

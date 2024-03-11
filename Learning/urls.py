@@ -27,15 +27,12 @@ urlpatterns = [
     path('curso/<int:pk>/edit/',login_required(CourseEditView.as_view()),name='editar_curso'),
     path('curso/<int:pk>/delete',login_required(CourseDeleteView.as_view()),name='borrar_curso'),
     path('error/',login_required(ErrorView.as_view()),name='error'),
+    path('enroll_course/<int:course_id>/', CourseEnrollmentView.as_view(), name='enroll_course'),
+    
     
 
-#This are the task that Cesar did 
-    path('tasks/', tasks, name="tasks"),
-    path('tasks_completed/', tasks_completed, name="tasks_completed"),
-    path('tasks/create/', create_task, name="create_task"),
-    path('tasks/<int:task_id>/', tasks_detail, name="tasks_detail"),   #Espera parametros
-    path('tasks/<int:task_id>/complete/', complete_task, name="complete_task"), #Espera parametros
-    path('tasks/<int:task_id>/delete/', delete_task, name="delete_task"), #Espera parametros
-    path('tasks/',include(('Task.urls','Task'),namespace='Task')),
+#This include all the Urls of the app Task 
+    path('tasks/',include(('Task.urls','Task'),namespace='tasks')),
+    
 
 ] +static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)

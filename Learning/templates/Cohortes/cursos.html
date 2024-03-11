@@ -65,7 +65,7 @@
                           <h5><span class="badge bg-success w-100">{{ course.get_status_display|upper }}</span>
                           </h5>
                           {% if request.user.is_Estudiante and not course.is_enrolled %}
-                              <a class="btn btn-sm btn-success" href="">Anotarse</a>
+                              <a class="btn btn-sm btn-success" href="{% url 'enroll_course' course.id %}">Anotarse</a>
                           {% elif course.is_enrolled %}
                               <a class="btn btn-sm btn-primary" href="{% url 'learning_overview' %}">Ir al Perfil</a>
                           {% endif %}

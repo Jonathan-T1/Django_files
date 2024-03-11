@@ -1,5 +1,5 @@
 from typing import Any
-from django.forms.models import BaseModelForm
+from django.contrib.auth.decorators import user_passes_test
 from django.http import HttpResponse
 from django.http.response import HttpResponseRedirect
 from django.shortcuts import render, redirect, get_object_or_404
@@ -9,6 +9,7 @@ from django.contrib.auth import logout
 from django.urls import reverse_lazy
 from .forms import *
 from .models import Registration
+from Task.models import Task
 from django.utils import timezone
 from django.contrib.auth import authenticate, login
 from django.views.generic import DetailView,TemplateView,UpdateView,DeleteView
@@ -100,79 +101,6 @@ def Cambiar_contraseña(request,pk):
             messages.error(request, "Error al Editar Contraseña")
     return render(request, 'UsersOPS/change_password.html', data)
 
-def tasks(request): #Vista de tareas
-    # tasks = Task.objects.all() #Para mostrar todos los usurios SIRVE PARA VISTA DOCENTE
-    # Muestra las tareas del un usuario en espeficico y solo las que a un estan por completar
-    tasks = Task.objects.filter(user=request.user, datecompleted__isnull=True)
-    return render(request, 'homeworks/tasks.html', {
-        'tasks': tasks
-    })
-
-def tasks_completed(request): #Vista de Tareas completadas
-    tasks = Task.objects.filter(user=request.user, datecompleted__isnull=False).order_by('-datecompleted')
-    return render(request, 'homeworks/tasks.html', {
-        'tasks': tasks
-    })
-
-def create_task(request): #Crear tarea
-    if request.method == 'GET':
-        return render(request, 'homeworks/create_task.html', {
-            'form': TaskForm
-        })
-    else:
-        try:
-            form = TaskForm(request.POST)
-            new_task = form.save(commit=False)
-            new_task.user = request.user
-            new_task.save()
-            return redirect('tasks')
-        except ValueError:
-            return render(request, 'homeworks/create_task.html', {
-                'form': TaskForm,
-                'error': 'Please provide valida data'
-            })
-        
-def tasks_detail(request, task_id): #Actualizar tareas
-    if request.method == 'GET':
-        task = get_object_or_404(Task, pk=task_id, user=request.user)#Busca por el id de la tarea y el usuario debe ser igual 
-        form = TaskForm(instance=task)
-        return render(request, 'homeworks/tasks_detail.html', {
-            'task': task,
-            'form': form
-        })
-    else:
-        try:          
-            tasks = Task.objects.filter(user=request.user, datecompleted__isnull=True)
-            task = get_object_or_404(Task, pk=task_id,  user=request.user)
-            form = TaskForm(request.POST, instance=task)
-            form.save()
-            title = Task.objects.get(pk=task_id).title
-            return render(request, 'homeworks/tasks.html', {
-                'msg': 'Actualizacion: ', 
-                'title':title,
-                'tasks': tasks
-
-            })
-        except ValueError:
-            task = get_object_or_404(Task, pk=task_id)
-            form = TaskForm(instance=task)
-            return render(request, 'homeworks/tasks_detail.html', {
-                'error': 'Error updatign task',
-                'form': form
-            })
-
-def complete_task(request, task_id): #Completar Tarea
-    task = get_object_or_404(Task, pk=task_id, user=request.user)
-    if request.method == 'POST':
-        task.datecompleted = timezone.now()
-        task.save()
-        return redirect ('tasks')
-    
-def delete_task(request, task_id): #Eliminar Tarea
-    task = get_object_or_404(Task, pk=task_id, user=request.user)
-    if request.method == 'POST':
-        task.delete()
-        return redirect ('tasks')
     
 @login_required    
 def register(request):
@@ -325,3 +253,15 @@ class CourseDeleteView(UserPassesTestMixin,DeleteView):
     def form_valid(self, form):
         messages.success(self.request,'Se ha logrado borrar al curso satisfactoriamente')
         return super().form_valid(form)
+    
+class CourseEnrollmentView(TemplateView):
+    def get(self, request, course_id):
+        course = get_object_or_404(Cohorte, id=course_id)
+        if self.request.user.is_Estudiante:
+            student = request.user
+            registration = Registration(course=course, student=student)
+            registration.save()
+            messages.success(request, 'Inscripción exitosa')
+        else:
+            messages.error(request, 'No se pudo inscribir al curso')
+        return redirect('cursos')
