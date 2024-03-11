@@ -110,22 +110,11 @@
               </a>
               <ul class="dropdown-menu dropdown-menu-success">
                 <li><a class="dropdown-item" href="{% url 'tasks:tasks' %}"> Tareas</a>
+                  <li>
+                    <hr class="dropdown-divider">
+                  </li>
+                <li><a class="dropdown-item" href={% url 'cursos' %}>Curses</a></li>
                 <li>
-                  <li>
-                    <hr class="dropdown-divider">
-                  </li>
-                  <li>
-                    <hr class="dropdown-divider">
-                  </li>
-                  <li>
-                    <hr class="dropdown-divider">
-                  </li>
-                <li><a class="dropdown-item" href="#">Curses</a></li>
-                <li>
-                  <hr class="dropdown-divider">
-                </li>
-                <li><a class="dropdown-item" href="#">Projects</a></li>
-              </ul>
             </li>
           </ul>
             {% elif user.is_Estudiante %}

@@ -39,25 +39,28 @@ def tasks_completed(request):
 
 @login_required
 def create_task(request):
-    courses = Cohorte.objects.all()  # Obtener todos los cursos disponibles
+    if request.user.is_staff or request.user.is_profesor:
+        courses = Cohorte.objects.all()  # Obtener todos los cursos disponibles
 
-    if request.method == 'GET':
-        return render(request, 'Task/create_task.html', {'form': TaskForm, 'courses': courses})
+        if request.method == 'GET':
+            return render(request, 'Task/create_task.html', {'form': TaskForm, 'courses': courses})
+        else:
+            try:
+                form = TaskForm(request.POST, request.FILES)
+                if form.is_valid():
+                    new_task = form.save(commit=False)
+                    new_task.user = request.user
+                    new_task.save()
+                    print(new_task)
+                    return redirect('tasks:tasks')
+            except ValueError:
+                return render(request, 'Task/create_task.html', {
+                    'form': TaskForm,
+                    'courses': courses,  # Pasa la lista de cursos al contexto
+                    'error': 'Por favor, envía datos válidos'
+                })
     else:
-        try:
-            form = TaskForm(request.POST, request.FILES)
-            if form.is_valid():
-                new_task = form.save(commit=False)
-                new_task.user = request.user
-                new_task.save()
-                print(new_task)
-                return redirect('tasks:tasks')
-        except ValueError:
-            return render(request, 'Task/create_task.html', {
-                'form': TaskForm,
-                'courses': courses,  # Pasa la lista de cursos al contexto
-                'error': 'Por favor, envía datos válidos'
-            })
+        return redirect('error')
       
 class TaskCreationView(View):
     template_name = 'Task/create_task.html'
