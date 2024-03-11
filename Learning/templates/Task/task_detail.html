@@ -12,6 +12,13 @@
             <div class="col">
                 <span class="float-end">
                     {% if request.user.is_staff %}
+                    <div class="mb-2" class="fixed-top">
+                        <a href="{% url 'tasks:tasks' %}" class="btn btn-secondary" role="button">
+                          <i class="bi bi-box-arrow-left"></i> Tareas </a>
+                      </div>
+                      <div class="mb-2" class="fixed-top">
+                          <a href="{% url 'tasks:create_nota' %}" class="btn btn-primary"><i class="bi bi-journal-arrow-up"></i> Calificar Tarea</a>
+                      </div>
                     {% elif request.user.is_profesor %}
                     <div class="mb-2" class="fixed-top">
                       <a href="{% url 'tasks:tasks' %}" class="btn btn-secondary" role="button">

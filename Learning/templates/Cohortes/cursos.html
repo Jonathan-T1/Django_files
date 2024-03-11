@@ -52,14 +52,14 @@
                           <h5><span class="badge bg-danger w-100">{{ course.get_status_display|upper }}</span>
                           </h5>
                           {% if course.is_enrolled %}
-                              <a class="btn btn-sm btn-warning" href="{% url 'learning_overview' %}">Ir al Perfil</a>
+                              <a class="btn btn-sm btn-primary" href="{% url 'learning_overview' %}">Ir al Perfil</a>
                           {% endif %}
                       {% elif course.status == 'P' %}
                           <h5><span
                               class="badge bg-warning text-dark w-100">{{ course.get_status_display|upper }}</span>
                           </h5>
                           {% if course.is_enrolled %}
-                              <a class="btn btn-sm btn-warning" href="{% url 'learning_overview' %}">Ir al Perfil</a>
+                              <a class="btn btn-sm btn-primary" href="{% url 'learning_overview' %}">Ir al Perfil</a>
                           {% endif %}
                       {% elif course.status == 'I' %}
                           <h5><span class="badge bg-success w-100">{{ course.get_status_display|upper }}</span>

@@ -1,0 +1,108 @@
+<br><h5>CURSOS EN LOS QUE ESTA INSCRIPTO</h5><br>
+<div></div><br>
+<div class="accordion" id="accordionEvolution">
+	<div class="accordion-item">
+		<h2 class="accordion-header" id="headingOne">
+			<button class="accordion-button collapsed bg-warning" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+				CURSOS EN PROGRESO
+			</button>
+		</h2>
+		<div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionEvolution">
+			<div class="accordion-body">
+				{% if progress_courses %}
+					<ul class="list-group">
+						{% for course in progress_courses %}
+							<li class="list-group-item list-group-item-warning">
+								{{ course.nombreCoh }}
+								<button type="button" class="btn btn-sm btn-warning float-end" data-bs-toggle="modal" data-bs-target="#modalEvolution" onclick="showEvolutionModal(this)" data-course-id="{{ course.id }}" data-student-id="{{ student_id }}">
+									{% if course.status == 'P' %}
+										Consultar Evolución
+									{% endif %}
+								</button>
+							</li>
+						{% endfor %}
+					</ul>
+				{% else %}
+					<div class="alert alert-warning" role="alert">
+						No hay cursos en progreso en los que se haya inscripto
+					</div>
+				{% endif %}
+			</div>
+		</div>
+	</div>
+<div class="accordion-item">
+	<h2 class="accordion-header" id="headingTwo">
+		<button class="accordion-button collapsed bg-success text-light" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+			CURSOS EN ETAPA DE INSCRIPCION
+		</button>
+	</h2>
+	<div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionEvolution">
+		<div class="accordion-body">
+			{% if inscription_courses %}
+				<ul class="list-group">
+					{% for course in inscription_courses %}
+						<li class="list-group-item list-group-item-success">
+							{{ course.nombreCoh }}
+							<button type="button" class="btn btn-sm btn-success float-end" data-bs-toggle="modal" data-bs-target="#modalEvolution" onclick="showEvolutionModal(this)" data-course-id="{{ course.id }}" data-student-id="{{ student_id }}">
+								{% if course.status == 'I' %}
+									Consultar Evolución
+								{% endif %}
+							</button>
+						</li>
+					{% endfor %}
+				</ul>
+			{% else %}
+				<div class="alert alert-success" role="alert">
+					No hay cursos para listar en los que se haya inscripto
+				</div>
+			{% endif %}
+		</div>
+	</div>
+</div>
+<div class="accordion-item">
+<h2 class="accordion-header" id="headingThree">
+	<button class="accordion-button collapsed bg-danger text-light" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+		CURSOS FINALIZADOS
+	</button>
+</h2>
+<div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionEvolution">
+	<div class="accordion-body">
+		{% if finalized_courses %}
+			<ul class="list-group">
+				{% for course in finalized_courses %}
+					<li class="list-group-item list-group-item-danger">
+						{{ course.nombreCoh }}
+						<button type="button" class="btn btn-sm btn-danger float-end" data-bs-toggle="modal" data-bs-target="#modalEvolution" onclick="showEvolutionModal(this)" data-course-id="{{ course.id }}" data-student-id="{{ student_id }}">
+							{% if course.status == 'F' %}
+								Consultar Evolución
+							{% endif %}
+						</button>
+					</li>
+				{% endfor %}
+			</ul>
+		{% else %}
+			<div class="alert alert-danger" role="alert">
+				No hay cursos finalizados para listar en los que se haya inscripto
+			</div>
+		{% endif %}
+	</div>
+</div>
+</div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="modalEvolution" tabindex="-1" aria-labelledby="modalEvolutionLabel" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-scrollable">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="modalEvolutionLabel">Consultar Evolución</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body" id="modal-body"></div>
+			<div class="modal-footer">
+				<a class="btn btn-sm btn-danger" href="" id="generate-pdf-button">Generar PDF</a>
+				<button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+			</div>
+		</div>
+	</div>
+</div>

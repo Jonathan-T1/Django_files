@@ -44,7 +44,7 @@
   {% else %}
   <nav class="navbar navbar-dark bg-secondary ">
     <div class="container-fluid" >
-      <a class="navbar-brand" href={% url 'learning_overview' %}>Learning You</a>
+      <a class="navbar-brand" href={% url 'staff_overview' %}>Learning You</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -59,7 +59,7 @@
               <a class="nav-link active" aria-current="page" href={% url 'home' %}>Home</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link active" href={% url 'learning_overview' %}>Learning</a>
+              <a class="nav-link active" href={% url 'staff_overview' %}>Learning</a>
               <li class="nav-item">
                 <a class="nav-link active" href={% url 'exit' %}>Log out</a>
               </li>
@@ -117,6 +117,7 @@
                 <li>
             </li>
           </ul>
+          
             {% elif user.is_Estudiante %}
           <form class="d-flex mt-3" role="search">
             <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">

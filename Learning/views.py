@@ -8,8 +8,8 @@ from django.contrib import messages
 from django.contrib.auth import logout
 from django.urls import reverse_lazy
 from .forms import *
-from .models import Registration
-from Task.models import Task
+from .models import Cohorte, Registration, User
+from django.contrib.auth.models import Group
 from django.utils import timezone
 from django.contrib.auth import authenticate, login
 from django.views.generic import DetailView,TemplateView,UpdateView,DeleteView
@@ -265,3 +265,106 @@ class CourseEnrollmentView(TemplateView):
         else:
             messages.error(request, 'No se pudo inscribir al curso')
         return redirect('cursos')
+    
+class ProfileView(TemplateView):
+    template_name = 'teacherandstuden/profile.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        user = self.request.user
+        context['user_form'] = CustumUserCreationForm(instance=user)
+        context['profile_form'] = ProfileForm()
+        initial_data = {
+        'biography': user.profile.biography,
+        'address': user.profile.address,
+        # Otros campos que desees prellenar
+        }
+        context['profile_form'] = ProfileForm(initial=initial_data) 
+
+        if  user.is_profesor:
+            # Obtener todos los cursos asignados al profesor
+            assigned_courses = Cohorte.objects.filter(teacher=user).order_by('-id')
+            inscription_courses = assigned_courses.filter(status='I')
+            progress_courses = assigned_courses.filter(status='P')
+            finalized_courses = assigned_courses.filter(status='F')
+            context['inscription_courses'] = inscription_courses
+            context['progress_courses'] = progress_courses
+            context['finalized_courses'] = finalized_courses
+
+        elif user.is_Estudiante:
+            # Obtener todos los cursos donde está inscrito el estudiante
+            student_id = user.id
+            registrations = Registration.objects.filter(student=user)
+            enrolled_courses = []
+            inscription_courses = []
+            progress_courses = []
+            finalized_courses = []
+
+            for registration in registrations:
+                course = registration.course
+                enrolled_courses.append(course)
+
+                if course.status == 'I':
+                    inscription_courses.append(course)
+                elif course.status == 'P':
+                    progress_courses.append(course)
+                elif course.status == 'F':
+                    finalized_courses.append(course)
+
+            context['student_id'] = student_id
+            context['inscription_courses'] = inscription_courses
+            context['progress_courses'] = progress_courses
+            context['finalized_courses'] = finalized_courses
+
+        elif user.is_staff:
+            # Obtengo todos los usuarios que no pertenecen al grupo administrativos
+            admin_group, created = Group.objects.get_or_create(name='staff')
+            all_users = User.objects.exclude(groups=admin_group)
+
+            # Obtengo cada perfil de usuario
+            user_profiles = []
+            for user in all_users:
+                profile = user.profile
+                user_groups = user.groups.all()
+                processed_groups = [plural_to_singular(group.name) for group in user_groups]
+                user_profiles.append({
+                    'user': user,
+                    'groups': processed_groups,
+                    'profile': profile
+                })
+
+            context['user_profiles'] = user_profiles
+
+            # Obtener todos los cursos existentes
+            all_courses = Cohorte.objects.all()
+            inscription_courses = all_courses.filter(status='I')
+            progress_courses = all_courses.filter(status='P')
+            finalized_courses = all_courses.filter(status='F')
+            context['inscription_courses'] = inscription_courses
+            context['progress_courses'] = progress_courses
+            context['finalized_courses'] = finalized_courses
+
+        return context
+
+    def post(self, request, *args, **kwargs):
+        user = self.request.user
+        user_form = CustumUserCreationForm(request.POST, instance=user)
+        profile_form = ProfileForm(request.POST, request.FILES, instance=user.profile)
+
+        if user_form.is_valid() and profile_form.is_valid():
+            user_form.save()
+            profile_form.save()
+            # Redireccionar a la página de perfil (con datos actualizados)
+            return redirect('profile')
+
+        # Si alguno de los datos no es válido
+        context = self.get_context_data()
+        context['user_form'] = user_form
+        context['profile_form'] = profile_form
+        return render(request, 'teacherandstuden/profile.html', context)
+    template_name = 'teacherandstuden/profile.html'
+
+def estudiantes_inscritos(request, cohorte_id):
+    cohorte = Cohorte.objects.get(pk=cohorte_id)
+    estudiantes = Registration.objects.filter(course=cohorte).select_related('student')
+    return render(request, 'teacherandstuden/list_students.html', {'cohorte': cohorte, 'estudiantes': estudiantes})

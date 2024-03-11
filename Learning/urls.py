@@ -19,7 +19,9 @@ urlpatterns = [
 #This are the profiles urls 
     path('users/me/profile/',update_profile,name='update_profile'),
     path('users/<str:username>/',UserDetailView.as_view(),name='detail'),
-    path('learning/overview/',profile,name='learning_overview'),
+    path('staff/overview/',profile,name='staff_overview'),
+    path('learning/overview/', login_required(ProfileView.as_view()), name='learning_overview'),
+    path('cohorte/<int:cohorte_id>/estudiantes/', estudiantes_inscritos, name='estudiantes_inscritos'),
 
 #This are the Curses urls
     path('cursos/',login_required(CoursesView.as_view()), name='cursos'),

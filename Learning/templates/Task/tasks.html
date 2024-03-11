@@ -15,6 +15,14 @@
       <div class="col">
           <span class="float-end">
               {% if request.user.is_staff  %}
+              <div class="mb-2" class="fixed-top">
+                <a href="{% url 'tasks:create_task' %}" class="btn btn-primary" role="button">
+                    <i class="bi bi-plus-circle "></i> Agregar Tarea </a>
+              </div>
+              <div class="mb-2" class="fixed-top">
+                <a href="{% url 'tasks:task_completed' %}" class="btn btn-success" role="button">
+                    <i class="bi bi-list-check"></i> Tareas Completadas </a>
+              </div>
               {% elif request.user.is_profesor %}
               <div class="mb-2" class="fixed-top">
                 <a href="{% url 'tasks:create_task' %}" class="btn btn-primary" role="button">
@@ -79,6 +87,7 @@
                       {% endif %}
 
                       {% if request.user.is_staff %}
+                            <a class="btn btn-sm btn-warning" href="{% url 'tasks:task_detail' task_id=task.id %}">Editar</a>
                       {% elif request.user.is_profesor %}
                           <a class="btn btn-sm btn-warning" href="{% url 'tasks:task_detail' task_id=task.id %}">Editar</a>
                       {% endif %}
