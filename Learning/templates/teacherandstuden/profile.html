@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+{% block title %} Profile {% endblock  %}
+
+{% block content %} 
+
+
+
+<div class="container-fluid" style="border-radius: 10px; background-color: #f0f0f0; padding: 7rem ; margin 3rem ">
+    <div>
+        {% if messages %}
+      <div class="container mt-3">
+          {% for message in messages %}
+              <div class="alert alert-danger" role="alert">
+                  {{ message }}
+              </div>
+          {% endfor %}
+      </div>
+     {% endif %}
+    </div>
+    <div class="row align-self-start" style="padding: 1rem ;">
+        <div class="col-sm-4 d-flex justify-content-center align-self-start " >
+            <img
+                src="{{ user.profile.picture.url }}"
+                alt="@{{ user.username}}"
+                class="rounded-circle border rounded shadow-lg"
+                width="150px"
+                height="150px"
+            />
+        </div>
+        <div class="col-sm-8">
+            <h2 style="font-weight: 100;">
+                @{{ user.username }}
+                {% if user == request.user %}
+                    <a
+                        href="{% url "update_profile" %}"
+                        class="ml-5 btn btn btn-outline-info"
+                    >
+                        Edit profile
+                    </a>
+                {% else %}
+                    <a
+                        href=""
+                        class="ml-5 btn btn-sm btn-primary"
+                    >
+                        Follow
+                    </a>
+                {% endif %}
+            </h2>
+
+            <div class="row mt-2" style="font-size: 1.2em">
+                <div class="col-sm-6">
+                    Direccion = <b>{{ user.profile.address }}</b>
+                </div>
+                <div class="col-sm-4">
+                    Telefono = <b>{{ user.phone}}</b>
+                </div>
+                <div class="col-sm-4">
+                    
+                </div>
+            </div>
+            <div class="row mt-4">
+                <div class="col-sm-12">
+                    <h1><p>{{ user.profile.biography }}</p> </h1>
+                </div>
+            </div>
+        </div>
+            <div class="col-md-18" style="background-color: #f0f0f0;">
+                <div class=" " style="background-color: #f0f0f0;">
+                    <div class="card-body">
+                        {% if request.user.is_authenticated %}
+                        {% if user.is_Estudiante %}
+                        {% include "teacherandstuden/student.html" %}
+                        {% elif user.is_profesor %}
+                        {% include "teacherandstuden/teacher.html" %}
+                        {% else  %}
+                        {% include "teacherandstuden/admin.html" %}
+                        {% endif %}
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+</div>
+{% endblock %}

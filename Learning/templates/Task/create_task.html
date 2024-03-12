@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Crear Tarea
+{% endblock  %}
+
+{% block content %}
+<div class="container my-4">
+    <div class="form-container">
+        <br>
+        <div class="row">
+            <div class="col">
+                <h2>Crear tarea</h2>
+            </div>
+            <div class="col">
+                <span class="float-end">
+                    {% if request.user.is_staff %}
+                    <div class="mb-2" class="fixed-top">
+                      <a href="{% url 'tasks:tasks' %}" class="btn btn-secondary" role="button">
+                        <i class="bi bi-box-arrow-left"></i> Tareas </a>
+                    </div>
+                    {% endif %}
+                </span>
+            </div>
+        </div>
+        <hr>
+
+        <div class="row justify-content-md-center">
+            <div class="col-6 p-4 border rounded shadow-lg" id="profile-box">
+                <form action="/tasks/create/" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+
+                    <div class="form-group">
+                        <label for="title">Titulo</label>
+                        <input class="form-control" type="text" name="title" placeholder="title" value="{{ form.title.value }}">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="description">Descripcion</label>
+                        <textarea class="form-control {% if form.description.errors %}is-invalid{% endif %}" name="description">
+                            {% if form.errors %}{{ form.description.value }}{% else %}{{ task.description }}{% endif %}
+                        </textarea>
+                        <div class="invalid-feedback">
+                            {% for error in form.description.errors %}
+                                {{ error }}
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="course" class="col-form-label">Selecciona un curso:</label>
+                        <select id="course" name="course" class="form-control">
+                            {% for course in courses %}
+                                <option value="{{ course.id }}">{{ course.nombreCoh }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="id_field">Archivo Adjunto:</label><br>
+                        {{ form.field }}
+                    </div>
+                    
+                    <br>
+
+                        <button type="submit" class="btn btn-success">Crear tarea <i class="bi bi-journal-plus"></i></button>
+                    
+                </form>
+            </div>
+        </div>
+
+    </div>
+</div>
+{% endblock %}

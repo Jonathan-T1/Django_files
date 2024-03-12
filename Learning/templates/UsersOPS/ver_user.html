@@ -1,57 +1,76 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block title %}| Users |{% endblock  %}
 
 {% block content %}
+
+{% if request.user.is_profesor %}
+<h1>No eres Administrador</h1>
+{% elif request.user.is_Estudiante %}
+<h1>No eres Administrador</h1>
+{% else %}
 <div>
-    <h1 class="text-center"> Users </h1><br>
-    <div class="mb-2">
-        <a href={% url "register" %} class="btn btn-primary" role="button">
-            <i class="bi bi-plus-circle "></i> Register User</a>
-    </div>
-    <table class="table table-dark table-striped" >
-        <thead class="table-dark">
-            <tr>
-                <th>ID</th>
-                <th>Foto</th>
-                <th>Name & <br> Last Name</th>
-                <th>Username</th>
-                <th>Cedula</th>
-                <th>Phone</th>
-                <th>Rol</th>
-                <th class="text-center">Accion's</th>
-            </tr>
-        </thead>
-        <tbody class="table-primary">
-            {% for x in user %}
-            <tr>
-                <th>{{x.id}}</th>
-                <th>here foto</th>
-                <th>{{x.first_name | upper}}<br>{{x.last_name | upper}}</th>
-                <th>{{x.username }}</th>
-                <th>{{x.cedula}}</th>
-                <th>{{x.phone}}</th>
-                {% if x.is_staff %}
-                <td>Administrador</td>
-                    <td>
-                        THIS USER CAN'T BE DELETED OR EDIT BY A NORMAL ADMIN
-                    </td>
-                {% elif x.is_profesor %}
-                <td>Profesor</td>
-                <td>
-                    <a href={% url "edit_user" x.id %} class="btn btn-warning btn-sm"><i class= "bi bi-pencil-square"></i> Edit</a>
-                    <a href={% url "delete_user" x.id %} class="btn btn-danger"><i class="bi bi-trash"></i> Delete</a>
-                </td>
-                {% else  %}
-                <td>Estudiante</td>
-                <td>
-                    <a href={% url "edit_user" x.id %} class="btn btn-warning btn-sm"><i class= "bi bi-pencil-square"></i> Edit</a>
-                    <a href={% url "delete_user" x.id %} class="btn btn-danger"><i class="bi bi-trash"></i> Delete</a>
-                </td>
-                {% endif %}
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+  <h1 class="text-center"> Users </h1><br>
+  <div class="mb-2">
+      <a href={% url "register" %} class="btn btn-primary" role="button">
+          <i class="bi bi-plus-circle "></i> Register User</a>
+  </div>
+  <table class="table table-dark table-striped" >
+      <thead class="table-dark">
+          <tr>
+              <th>ID</th>
+              <th>Foto</th>
+              <th>Name & <br> Last Name</th>
+              <th>Username</th>
+              <th>Cedula</th>
+              <th>Email</th>
+              <th>Phone</th>
+              <th>Rol</th>
+              <th class="text-center">Accion's</th>
+          </tr>
+      </thead>
+      <tbody class="table-primary">
+          {% for x in user %}
+          <tr>
+              <th>{{x.id}}</th>
+              <th class="nav-item">
+                <a href="">
+                    {% if x.profile.picture %}
+                        <img src="{{ x.profile.picture.url }}" width="45" height="45" class="d-inline-block align-top rounded-circle"/>
+                    {% else %}
+                        <img src="{% static 'img/df-profile.png' %}" width="45" height="45" class="d-inline-block align-top rounded-circle"/>
+                    {% endif %}
+                </a>
+              </th>
+              <th>{{x.first_name | upper}}<br>{{x.last_name | upper}}</th>
+              <th>{{x.username }}</th>
+              <th>{{x.cedula}}</th>
+              <th>{{x.email}}</th>
+              <th>{{x.phone}}</th>
+              {% if x.is_staff %}
+              <td>Administrador</td>
+                  <td>
+                      THIS USER CAN'T BE DELETED OR <br> EDIT BY A NORMAL ADMIN
+                  </td>
+              {% elif x.is_profesor %}
+              <td>Profesor</td>
+              <td>
+                  <a href={% url "edit_user" x.id %} class="btn btn-warning " type="button"><i class= "bi bi-pencil-square"></i> Edit</a>
+                  <a href={% url "delete_user" x.id %} class="btn btn-danger"><i class="bi bi-trash"></i> Delete</a>
+              </td>
+              {% else  %}
+              <td>Estudiante</td>
+              <td>
+                  <a href={% url "edit_user" x.id %} class="btn btn-warning "><i class= "bi bi-pencil-square"></i> Edit</a>
+                  <a href={% url "delete_user" x.id %} class="btn btn-danger"><i class="bi bi-trash"></i> Delete</a>
+              </td>
+              {% endif %}
+          </tr>
+          {% endfor %}
+      </tbody>
+  </table>
 </div>
+{% endif %}
+
 {% endblock  %}

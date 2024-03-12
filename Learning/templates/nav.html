@@ -1,7 +1,87 @@
-
-<div class="fixed-top"><nav class="navbar navbar-dark bg-dark "  >
+{% load static %}
+<div class="">
+  {% if request.user.is_authenticated %}
+  {% if user.is_profesor %}
+    <nav class="navbar navbar-dark bg-success ">
+      <div class="container-fluid" >
+        <a class="navbar-brand" href={% url 'learning_overview' %}>Learning You</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="offcanvas offcanvas-end text-bg-success" tabindex="-1" id="offcanvasDarkNavbar" aria-labelledby="offcanvasDarkNavbarLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="offcanvasDarkNavbarLabel">Learning You</h5>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+         </div>
+          <div class="offcanvas-body">
+            <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href={% url 'home' %}>Home</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link active" href={% url 'learning_overview' %}>Learning</a>
+              </li>
+  {% elif user.is_Estudiante %}
+  <nav class="navbar navbar-dark bg-primary">
     <div class="container-fluid" >
-      <a class="navbar-brand" href={% url 'Learning' %}>Learning You</a>
+      <a class="navbar-brand" href={% url 'learning_overview' %}>Learning You</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="offcanvas offcanvas-end text-bg-primary" tabindex="-1" id="offcanvasDarkNavbar" aria-labelledby="offcanvasDarkNavbarLabel">
+        <div class="offcanvas-header">
+          <h5 class="offcanvas-title" id="offcanvasDarkNavbarLabel">Learning You</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+       </div>
+        <div class="offcanvas-body">
+          <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href={% url 'home' %}>Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" href={% url 'learning_overview' %}>Learning</a>
+            </li>
+  {% else %}
+  <nav class="navbar navbar-dark bg-secondary ">
+    <div class="container-fluid" >
+      <a class="navbar-brand" href={% url 'staff_overview' %}>Learning You</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="offcanvas offcanvas-end text-bg-secondary" tabindex="-1" id="offcanvasDarkNavbar" aria-labelledby="offcanvasDarkNavbarLabel">
+        <div class="offcanvas-header">
+          <h5 class="offcanvas-title" id="offcanvasDarkNavbarLabel">Learning You</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+       </div>
+        <div class="offcanvas-body">
+          <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href={% url 'home' %}>Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" href={% url 'staff_overview' %}>Learning</a>
+              <li class="nav-item">
+                <a class="nav-link active" href={% url 'exit' %}>Log out</a>
+              </li>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle active" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  Hellow {{ user.username }} Thanks for be our staff member <br>
+                  this are your options
+                </a>
+                <ul class="dropdown-menu dropdown-menu-danger">
+                  <li><a class="dropdown-item" href={% url "see_users" %}>User</a></li>
+                  <li>
+                    <hr class="dropdown-divider">
+                  </li>
+                  <li><a class="dropdown-item" href={% url 'cursos' %}>Cursos</a></li>
+                </ul>
+              </li>
+            </ul>
+  {% endif %}
+  {% else %}
+  <nav class="navbar navbar-dark bg-dark">
+    <div class="container-fluid" >
+      <a class="navbar-brand" href={% url 'learning_overview' %}>Learning You</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -9,15 +89,15 @@
         <div class="offcanvas-header">
           <h5 class="offcanvas-title" id="offcanvasDarkNavbarLabel">Learning You</h5>
           <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-        </div>
+       </div>
         <div class="offcanvas-body">
           <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
             <li class="nav-item">
               <a class="nav-link active" aria-current="page" href={% url 'home' %}>Home</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link active" href={% url 'Learning' %}>Learning</a>
-            </li>
+              <a class="nav-link active" href={% url 'learning_overview' %}>Learning</a>
+  {% endif %}
             {% if request.user.is_authenticated %}
             {% if user.is_profesor %}
             <li class="nav-item">
@@ -28,21 +108,16 @@
                 Hellow {{ user.username }} Thanks for be our Teacher <br>
                 this are your options
               </a>
-              <ul class="dropdown-menu dropdown-menu-dark">
-                <li><a class="nav-link dropdown-toggle active" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">homework assignment</a>
-                  <li class="nav-item">
-                    <a class="nav-link active" href="{% url 'create_task' %}">Create Task</a>
-                    <a class="nav-link active" href="{% url 'tasks' %}">Task Pending</a>
-                    <a class="nav-link active" href="{% url 'tasks_completed' %}">Task Completed</a>
+              <ul class="dropdown-menu dropdown-menu-success">
+                <li><a class="dropdown-item" href="{% url 'tasks:tasks' %}"> Tareas</a>
+                  <li>
+                    <hr class="dropdown-divider">
                   </li>
-                <li><a class="dropdown-item" href="#">Curses</a></li>
+                <li><a class="dropdown-item" href={% url 'cursos' %}>Curses</a></li>
                 <li>
-                  <hr class="dropdown-divider">
-                </li>
-                <li><a class="dropdown-item" href="#">Projects</a></li>
-              </ul>
             </li>
           </ul>
+          
             {% elif user.is_Estudiante %}
           <form class="d-flex mt-3" role="search">
             <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
@@ -51,32 +126,9 @@
           <li class="nav-item">
             <a class="nav-link active" href={% url 'exit' %}>Log out</a>
           </li>
+          <li><a class="dropdown-item" href={% url 'cursos' %}>Cursos</a></li>
+                  <li>
             {% else %}
-            <li class="nav-item">
-              <a class="nav-link active" href={% url 'exit' %}>Log out</a>
-            </li>
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle active" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                Hellow {{ user.username }} Thanks for be our staff member <br>
-                this are your options
-              </a>
-              <ul class="dropdown-menu dropdown-menu-dark">
-                <li><a class="dropdown-item" href={% url "see_users" %}>User</a></li>
-                <li>
-                  <hr class="dropdown-divider">
-                </li>
-                <li><a class="dropdown-item" href={% url 'cohortes' %}>Cohorte</a></li>
-                <li>
-                  <hr class="dropdown-divider">
-                </li>
-                <li><a class="dropdown-item" href="#">Signature</a></li>
-                <li>
-                  <hr class="dropdown-divider">
-                </li>
-                <li><a class="dropdown-item" href="#">Curses</a></li>
-              </ul>
-            </li>
-          </ul>
             {% endif %}
             {% else %}
             <li class="nav-item">
@@ -85,6 +137,16 @@
             {% endif %}
         </div>
       </div>
+      
     </div>
   </nav>
 </div>
+
+<!--
+<a href="{% url "learning_overview" %}">
+  {% if request.user.profile.picture %}
+      <img src="{{ request.user.profile.picture.url }}" class="rounded-circle" height="50" />
+  {% else%}
+      <img src="{% static 'img/default-profile.png' %}" height="35" class="d-inline-block align-top rounded-circle">
+  {% endif %}   
+  </a>-->

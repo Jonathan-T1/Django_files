@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+    <div class="container mt-4">
+
+        <div class="row">
+            <div class="col">
+                <h1>{{ task.title }}</h1>
+            </div>
+            <div class="col">
+                <span class="float-end">
+                    {% if request.user.is_staff %}
+                    <div class="mb-2" class="fixed-top">
+                        <a href="{% url 'tasks:tasks' %}" class="btn btn-secondary" role="button">
+                          <i class="bi bi-box-arrow-left"></i> Tareas </a>
+                      </div>
+                      <div class="mb-2" class="fixed-top">
+                          <a href="{% url 'tasks:create_nota' %}" class="btn btn-primary"><i class="bi bi-journal-arrow-up"></i> Calificar Tarea</a>
+                      </div>
+                    {% elif request.user.is_profesor %}
+                    <div class="mb-2" class="fixed-top">
+                      <a href="{% url 'tasks:tasks' %}" class="btn btn-secondary" role="button">
+                        <i class="bi bi-box-arrow-left"></i> Tareas </a>
+                    </div>
+                    <div class="mb-2" class="fixed-top">
+                        <a href="{% url 'tasks:create_nota' %}" class="btn btn-primary"><i class="bi bi-journal-arrow-up"></i> Calificar Tarea</a>
+                    </div>
+                    {% endif %}
+                </span>
+            </div>
+        </div>
+
+
+        <hr>
+        {{ error }}
+
+        <div class="row justify-content-md-center">
+            <div class="col-6 p-4 border rounded shadow-lg" id="profile-box">
+                <form method="POST" class="crispy" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {{ form|crispy }}
+                    <button type="submit" class="btn btn-success mb-2"><i class="bi bi-cloud-download"></i> Guardar</button>
+                </form>
+        
+                <form action="{% url 'tasks:complete_task' task_id=task.id %}" method="POST">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-info mb-2"><i class="bi bi-check-circle"></i> Completado</button>
+                </form>
+        
+                <form action="{% url 'tasks:delete_task' task_id=task.id %}" method="POST">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger mb-2"><i class="bi bi-trash"></i> Eliminado</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}

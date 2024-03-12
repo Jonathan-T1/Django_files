@@ -32,14 +32,21 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'Learning',
+    'Task',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'crispy_forms',
+    'crispy_bootstrap5',
     'bootstrap5',
 ]
+
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
+
+CRISPY_TEMPLATE_PACK = "bootstrap5"
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -49,6 +56,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    #'LearningYou2.middleware.ProfileCompletionMiddleware'
 ]
 
 ROOT_URLCONF = 'LearningYou2.urls'
@@ -105,9 +113,9 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'es'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'America/Bogota'
 
 USE_I18N = True
 
@@ -117,17 +125,15 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-STATIC_URL = 'static/'
-STATICFILES_DIRS = (
-    BASE_DIR / 'static',   
-)
+STATIC_URL = '/static/'
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 STATICFILES_FINDERS = [
     "django.contrib.staticfiles.finders.FileSystemFinder",
     "django.contrib.staticfiles.finders.AppDirectoriesFinder",
 ]
 
 
-MEDIA_ROOT = os.path.join(BASE_DIR,'')
+MEDIA_ROOT = os.path.join(BASE_DIR,'Media')
 MEDIA_URL = '/Media/'
 
 # Default primary key field type
@@ -135,6 +141,18 @@ MEDIA_URL = '/Media/'
 
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.googlemail.com'
+EMAIL_PORT = 587
+#EMAIL_HOST_USER = 'jonathantlearingyou@gmail.com'
+#EMAIL_HOST_PASSWORD = 'Feliznavidad2020*'
+EMAIL_HOST_USER = '6visionarios@gmail.com'
+EMAIL_HOST_PASSWORD = 'lpxhwldfkkojofdf'
+EMAIL_USE_TLS = True
+DEFAULT_FROM_EMAIL = 'JD.Learningyou@Learningyou.com'
+
 
 LOGIN_REDIRECT_URL = 'home'
 LOGOUT_REDIRECT_URL = 'home'
