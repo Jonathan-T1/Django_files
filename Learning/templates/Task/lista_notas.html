@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %} | Cursos |{% endblock  %}
+{% block content %}
+<div class="container my-4">    
+    <h1>Lista de Notas</h1>
+    <div class="nota-container">
+        <ul>
+            {% for nota in notas %}
+            <li>
+                <div class="nota-info">
+                    <div class="estudiante">
+                        <span>Estudiante: {{ nota.student.username }}</span><br>
+                    </div>
+                    <div class="tarea">
+                        <span class="tarea-title">Tarea:</span> {{ nota.tareas.title }}<br>
+                    </div>
+                    <div class="nota">
+                        <span>Nota 1:</span> {{ nota.mark1 }}<br>
+                    </div>
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+{% endblock %}

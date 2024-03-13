@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{{ error }}
+<form action="/tasks/create_nota/" method="post"  enctype="multipart/form-data">
+    {% csrf_token %}
+    {% load crispy_forms_tags %} <!-- Asegúrate de incluir esta línea -->
+    {{ form | crispy }}
+    <button type="submit">Subir Notas</button>
+</form>
+{% endblock %}

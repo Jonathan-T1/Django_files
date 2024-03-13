@@ -45,10 +45,8 @@ urlpatterns = [
          name='notas'
          ),
 
-    path(route='lista/notas/',
-         view=views.lista_notas, 
-         name='notas'
-         ),
+   path('lista_notas/', views.lista_notas, name='lista_notas'),
+
 
     path(route='<int:task_id>/nota_detail/',
          view=views.nota_detail, 
@@ -87,4 +85,8 @@ urlpatterns = [
      path(route='complete/',
           view=views.tasks_completed2,
           name='task_completed'),
+     
+     path('complete/', views.tasks_completed2, name='task_completed_2'),
+     path('nota/', views.nota, name='notas'),
+    
 ]

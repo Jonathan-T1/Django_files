@@ -25,7 +25,11 @@ class Task(models.Model):
 
 
 class Calificacion(models.Model):
-    student = models.ForeignKey(User, on_delete=models.CASCADE)
+    student = models.ForeignKey(User, on_delete=models.CASCADE,
+        null=True,
+        blank=True,
+        limit_choices_to=Q(is_Estudiante=True)
+        )
     tareas= models.ForeignKey(Task, on_delete=models.CASCADE, null=True, blank=True)
     mark1 = models.PositiveIntegerField(null=True, blank=True, verbose_name='nota1')
     mark2 = models.PositiveIntegerField(null=True, blank=True, verbose_name='nota2')

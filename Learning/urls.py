@@ -35,6 +35,9 @@ urlpatterns = [
 
 #This include all the Urls of the app Task 
     path('tasks/',include(('Task.urls','Task'),namespace='tasks')),
+
     
+#urls donde le profesor mirara los estudiantes inscritos a su curso
+    path('cohorte/<int:cohorte_id>/estudiantes/', estudiantes_inscritos, name='estudiantes_inscritos'),
 
 ] +static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)

@@ -39,7 +39,7 @@ def tasks_completed(request):
 
 @login_required
 def create_task(request):
-    if request.user.is_staff or request.user.is_profesor:
+    if request.user.is_staff or request.user.is_profesor or request.user.is_Estudiante:
         courses = Cohorte.objects.all()  # Obtener todos los cursos disponibles
 
         if request.method == 'GET':
@@ -89,7 +89,7 @@ def tasks_completed2(request):  # Vista de Tareas completadas
     if request.user.is_staff or request.user.is_profesor:
         tasks = Task.objects.filter(datecompleted__isnull=False).order_by('-datecompleted')
     else:
-        tasks = Task.objects.filter(curso__user=request.user, datecompleted__isnull=False).order_by('-datecompleted')
+        tasks = Task.objects.filter(curso_user=request.user, datecompleted_isnull=False).order_by('-datecompleted')
     
     return render(request, 'Task/tasks_completed.html', {
         'tasks': tasks
@@ -172,17 +172,18 @@ def nota(request):
     promedio = sum([nota.average for nota in notas]) / total_notas if total_notas > 0 else 0
     return render(request, 'Task/notas.html', {'notas': notas, 'promedio': promedio})
 
-def create_nota(request):
+
+def create_nota(request, task_id=None):
     if request.method == 'GET':
         return render(request, 'Task/create_nota.html', {'form': CalificacionForm})
     else:
         try:
             form = CalificacionForm(request.POST, request.FILES)
             if form.is_valid():
-                new_nota = form.save(commit=False)              
+                new_nota = form.save(commit=False)
                 new_nota.user = request.user
                 new_nota.save()
-                return redirect('notas')
+                return redirect('tasks:notas')
         except ValueError:
             return render(request, 'Task/create_nota.html', {
                 'form': CalificacionForm,

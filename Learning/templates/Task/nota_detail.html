@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>Detalles de la Nota</h1>
+<a href="{% url 'calificar_tarea' tarea.id %}">Calificar Tarea</a>
+{{ error }}
+
+<form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Guardar</button>
+</form>
+
+<form action="{% url 'complete_nota' nota.id %}" method="POST">
+    {% csrf_token %}
+    <button type="submit">Completado</button>
+</form>
+
+<form action="{% url 'delete_nota' nota.id %}" method="POST">
+    {% csrf_token %}
+    <button type="submit">Eliminar</button>
+</form>
+{% endblock %}
+
+
+            
+       
+        </a>
+    </li>
+    {% endfor %}
+</ul>
+
+{% endblock %}

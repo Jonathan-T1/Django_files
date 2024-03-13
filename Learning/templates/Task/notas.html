@@ -1,0 +1,67 @@
+
+{% extends 'base.html' %}
+
+{% block extra_css %}
+<style>
+    /* Estilos específicos para la lista de tareas pendientes */
+    h1 {
+        font-size: 24px; /* Tamaño del título */
+        margin-bottom: 20px; /* Espacio inferior */
+    }
+
+    ul {
+        list-style-type: none; /* Quita los puntos de la lista */
+        padding: 0;
+    }
+
+    li {
+        background-color: rgba(255, 255, 255, 0.8); /* Fondo del elemento con transparencia */
+        border-radius: 10px; /* Bordes redondeados */
+        padding: 20px; /* Espacio interno */
+        margin-bottom: 20px; /* Espacio inferior entre elementos */
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Sombra difuminada */
+    }
+
+    li:hover {
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Sombra más pronunciada al pasar el mouse */
+    }
+
+    a {
+        text-decoration: none; /* Quita el subrayado de los enlaces */
+        color: inherit; /* Hereda el color del texto */
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<h1>tareas pendientes </h1>
+
+<ul>
+    <!--se recorrera por medio de un arreglo-->
+    {% for task in tasks %}
+    <!--tasks es el dato que se esta pasando desde el backend
+    para cada elemento en el arreglo empieza a recorrerlo
+    --> 
+    <li>
+        <a href="{% url 'notas_detail' task.id %}">
+            <!--como es una variable dinámica se escribe de esa forma
+            lo enviará al task detail con el parámetro task id, permitiendo buscar las tareas por su id -->
+            {% if task.important %}
+            <strong>{{nota.title}}</strong>
+            {% else %}
+            {{nota.title}}
+            {% endif %}
+            
+            <p>{{nota.description}}</p>
+            <p>{{nota.user.username}}</p>
+            <p>Estudiante: {{ nota.student.username }}</p>
+
+
+            
+       
+        </a>
+    </li>
+    {% endfor %}
+</ul>
+
+{% endblock %}

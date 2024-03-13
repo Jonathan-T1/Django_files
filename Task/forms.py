@@ -12,14 +12,14 @@ class TaskForm(forms.ModelForm, ):
         model = Task
         fields = ['title', 'description','curso','field',]
         
-    def __init__(self, *args, **kwargs):
+    def _init_(self, *args, **kwargs):
         #este es el metodo constructor de la clase
         #init sirve para instanciar un objrto de una clase
-        super(TaskForm, self).__init__(*args, **kwargs)
+        super(TaskForm, self)._init_(*args, **kwargs)
         self.fields['field'].widget = forms.ClearableFileInput(attrs={'multiple': False})
         #el clearblefileinput permite seleccionar varios archivos
 
 class CalificacionForm(forms.ModelForm):
     class Meta:
         model = Calificacion
-        fields = ['student','mark1','mark2','mark3','average','tareas']
+        fields = ['student','mark1','tareas']
