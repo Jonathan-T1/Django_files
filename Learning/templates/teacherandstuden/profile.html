@@ -1,8 +1,8 @@
 {% extends "base.html" %}
+{% load static %}
 {% block title %} Profile {% endblock  %}
 
 {% block content %} 
-
 
 
 <div class="container-fluid" style="border-radius: 10px; background-color: #f0f0f0; padding: 7rem ; margin 3rem ">
@@ -19,13 +19,24 @@
     </div>
     <div class="row align-self-start" style="padding: 1rem ;">
         <div class="col-sm-4 d-flex justify-content-center align-self-start " >
-            <img
-                src="{{ user.profile.picture.url }}"
-                alt="@{{ user.username}}"
-                class="rounded-circle border rounded shadow-lg"
-                width="150px"
-                height="150px"
-            />
+            {% if user.profile.picture %}
+                <img
+                    src="{{ user.profile.picture.url }}"
+                    alt="@{{ user.username }}"
+                    class="rounded-circle border rounded shadow-lg"
+                    width="150px"
+                    height="150px"
+                />
+            {% else %}
+                <!-- Si no hay imagen de perfil, muestra la imagen predeterminada -->
+                <img
+                    src="{% static 'img/df-profile.png' %}"
+                    alt="@{{ user.username }}"
+                    class="rounded-circle border rounded shadow-lg"
+                    width="150px"
+                    height="150px"
+                />
+            {% endif %}
         </div>
         <div class="col-sm-8">
             <h2 style="font-weight: 100;">

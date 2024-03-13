@@ -3,7 +3,21 @@
 {% block content %} 
 {% load crispy_forms_tags %}
 <div class="container my-4">
-    <h2>Editar Curso</h2>
+    <div class="row">
+        <div class="col">
+            <h2>Editar Cursos</h2>
+        </div>
+        <div class="col">
+            <span class="float-end">
+                {% if request.user.is_staff %}
+                <div class="mb-2" class="fixed-top">
+                  <a href="{% url 'cursos' %}" class="btn btn-success" role="button">
+                    <i class="bi bi-box-arrow-left"></i> Cursos </a>
+                </div>
+                {% endif %}
+            </span>
+        </div>
+    </div>
     <!-- sección de mensajes -->
     {% if messages %}
         <div class="container mt-3">
@@ -21,8 +35,7 @@
             <div class="card-body border rounded shadow-lg">
                 <h5 class="card-title">Complete todos los campos para editar el curso</h5>
                 {{ form | crispy }}
-                <a class="card-link" href="{% url 'home' %}">Inicio</a>
-                <a class="card-link" href="{% url 'cursos' %}">Cursos</a>
+                <a class="card-link" href="{% url 'home' %}">HOME</a>
                 <button class="btn btn-primary float-end" type="submit">Guardar Cambios</button>
             </div>
         </div>
