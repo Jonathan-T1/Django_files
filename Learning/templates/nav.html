@@ -16,10 +16,10 @@
           <div class="offcanvas-body">
             <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
               <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href={% url 'home' %}>Home</a>
+                <a class="nav-link active" aria-current="page" href={% url 'home' %}><i class="bi bi-house-door"></i> Home</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link active" href={% url 'learning_overview' %}>Learning</a>
+                <a class="nav-link active" href={% url 'learning_overview' %}<i class="bi bi-book"></i> >Learning</a>
               </li>
   {% elif user.is_Estudiante %}
   <nav class="navbar navbar-dark bg-primary">
@@ -36,10 +36,10 @@
         <div class="offcanvas-body">
           <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href={% url 'home' %}>Home</a>
+              <a class="nav-link active" aria-current="page" href={% url 'home' %}><i class="bi bi-house-door"></i> Home</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link active" href={% url 'learning_overview' %}>Learning</a>
+              <a class="nav-link active" href={% url 'learning_overview' %}><i class="bi bi-book"></i> Learning</a>
             </li>
   {% else %}
   <nav class="navbar navbar-dark bg-secondary ">
@@ -56,12 +56,12 @@
         <div class="offcanvas-body">
           <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href={% url 'home' %}>Home</a>
+              <a class="nav-link active" aria-current="page" href={% url 'home' %}><i class="bi bi-house-door"></i> Home</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link active" href={% url 'staff_overview' %}>Learning</a>
+              <a class="nav-link active" href={% url 'staff_overview' %}><i class="bi bi-book"></i> Learning</a>
               <li class="nav-item">
-                <a class="nav-link active" href={% url 'exit' %}>Log out</a>
+                <a class="nav-link active" href={% url 'exit' %}><i class="bi bi-box-arrow-left"></i> Log out</a>
               </li>
               <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle active" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -73,7 +73,7 @@
                   <li>
                     <hr class="dropdown-divider">
                   </li>
-                  <li><a class="dropdown-item" href={% url 'cursos' %}>Cursos</a></li>
+                  <li><a class="dropdown-item" href={% url 'cursos' %}>Curses</a></li>
                 </ul>
               </li>
             </ul>
@@ -93,15 +93,15 @@
         <div class="offcanvas-body">
           <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href={% url 'home' %}>Home</a>
+              <a class="nav-link active" aria-current="page" href={% url 'home' %}><i class="bi bi-house-door"></i> Home</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link active" href={% url 'learning_overview' %}>Learning</a>
+              <a class="nav-link active" href={% url 'learning_overview' %}><i class="bi bi-book"></i> Learning</a>
   {% endif %}
             {% if request.user.is_authenticated %}
             {% if user.is_profesor %}
             <li class="nav-item">
-              <a class="nav-link active" href={% url 'exit' %}>Log out</a>
+              <a class="nav-link active" href={% url 'exit' %}><i class="bi bi-box-arrow-left"></i>Log out</a>
             </li>
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle active" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -113,26 +113,36 @@
                   <li>
                     <hr class="dropdown-divider">
                   </li>
-                <li><a class="dropdown-item" href={% url 'cursos' %}>Curses</a></li>
+                  <li><a class="dropdown-item" href={% url 'cursos' %}>Curses</a></li>
                 <li>
+                </li>
+              </ul>
             </li>
-          </ul>
-          
             {% elif user.is_Estudiante %}
-          <form class="d-flex mt-3" role="search">
-            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-success" type="submit">Search</button>
-          </form>
           <li class="nav-item">
-            <a class="nav-link active" href={% url 'exit' %}>Log out</a>
+            <a class="nav-link active" href={% url 'exit' %}><i class="bi bi-box-arrow-left"></i> Log out </a>
           </li>
-          <li><a class="dropdown-item" href={% url 'cursos' %}>Cursos</a></li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle active" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Hellow {{ user.username }} Thanks for be our Stdent in LearningYou <br>
+              this are your options
+            </a>
+            <ul class="dropdown-menu dropdown-menu-success">
+              <li><a class="dropdown-item" href="{% url 'tasks:tasks' %}"> Tareas</a>
+                <li>
+                  <hr class="dropdown-divider">
+                </li>
+                <li><a class="dropdown-item" href={% url 'cursos' %}>Curses</a></li>
+              <li>
+              </li>
+            </ul>
+          </li>
                   <li>
             {% else %}
             {% endif %}
             {% else %}
             <li class="nav-item">
-              <a class="nav-link active" href={% url 'login' %}>Sing in</a>
+              <a class="nav-link active" href={% url 'login' %}><i class="bi bi-door-open-fill"></i> Sing in</a>
             </li>
             {% endif %}
         </div>

@@ -150,6 +150,13 @@ def crear_curso(request):
         return render(request,'Cohortes/crear_curso.html',data)
     else:
         return redirect('error')
+    
+def error_404(request,exception):
+    return render(request,'404_error.html', status=404) 
+
+def error_500(request):
+    return render(request, 'composition/500_error.html')
+
 @login_required
 def update_profile(request):
     """Update a user's profile view."""
@@ -381,3 +388,5 @@ def estudiantes_inscritos(request, cohorte_id):
     cohorte = Cohorte.objects.get(pk=cohorte_id)
     estudiantes = Registration.objects.filter(course=cohorte).select_related('student')
     return render(request, 'teacherandstuden/list_students.html', {'cohorte': cohorte, 'estudiantes': estudiantes})
+
+

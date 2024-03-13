@@ -7,7 +7,7 @@
 <div class="m-3 p-3">
 
   <div class="row m-3">
-    <h2 class="text-center">Realiza el registro del usuario</h2>
+    <h2 class="text-center">Perform user registration</h2>
     
       {% if messages %}
         <ul class="messages">
@@ -24,12 +24,12 @@
     <form class="row g-3 needs-validation" action="" method="post">
     {% csrf_token %}
       <div class="col-md-4">
-        <label for="validatename01" class="form-label">Tu nombre</label>
+        <label for="validatename01" class="form-label">Name</label>
         <input 
           class="form-control {% if form.first_name.errors %}is-invalid{% endif %}"
           type="text" 
           name = "first_name"  
-          placeholder="Intruduzca su nombre "
+          placeholder="Enter your name "
           value="{% if form.errors %}{{ form.first_name.value }}{% else %}{{ user.first_name}}{% endif %}"
           required/>
         <div class="invalid-feedback">
@@ -42,19 +42,19 @@
        </div>
       </div>
   <div class="col-md-4">
-    <label for="validatelastname01" class="form-label">Tu apellido</label>
+    <label for="validatelastname01" class="form-label">Last Name</label>
     {{ form.last_name }}
     <div class="valid-feedback">
       Luce muy bien!
     </div>
   </div>
   <div class="col-md-4">
-    <label for="validatelastname01" class="form-label">Cedula</label>
+    <label for="validatelastname01" class="form-label">Citizenship card</label>
     <input 
         class="form-control {% if form.cedula.errors %}is-invalid{% endif %}"
         type="text" 
         name="cedula"  
-        placeholder="Introduzca su cédula"
+        placeholder="Enter your ID"
         value="{% if form.errors %}{{ form.cedula.value }}{% else %}{{ user.cedula|default:'' }}{% endif %}"
         required/>
     <div class="invalid-feedback">
@@ -67,14 +67,14 @@
     </div>
     </div>
     <div class="col-12">
-      <label for="validationCustomUsername" class="form-label">Nombre de usuario</label>
+      <label for="validationCustomUsername" class="form-label">Username</label>
       <div class="input-group has-validation">
         <span class="input-group-text" id="inputGroupPrepend">@</span>
         <input 
             class="form-control {% if form.username.errors %}is-invalid{% endif %}"
             type="username" 
             name = "username"  
-            placeholder="Intruduzca su nombre de Usuario"
+            placeholder="Enter the Username"
             value="{{ user.username}}"
             required/>
           <div class="invalid-feedback">
@@ -88,12 +88,12 @@
       </div>
     </div>
     <div class="col-md-4">
-      <label for="inputPassword5" class="form-label">Confirmar Contraseña</label>
+      <label for="inputPassword5" class="form-label">Password</label>
       <input 
             class="form-control {% if form.password1.errors %}is-invalid{% endif %}"
             type="password" 
             name = "password1"  
-            placeholder="Confirmar Contraseña"
+            placeholder="Password"
             value="{{ user.password1}}"
             required/>
           <div class="invalid-feedback">
@@ -102,16 +102,16 @@
             {% endfor %}
           </div>
       <div id="passwordHelpBlock" class="form-text">
-        Su contraseña debe tener entre 8 y 20 caracteres, contener letras y números, y no debe contener espacios, caracteres especiales ni emojis.
+        Your password must be between 8 and 20 characters, contain letters and numbers, and must not contain spaces, special characters, or emojis.
       </div>
     </div>               
     <div class="col-md-4">
-      <label for="inputPassword5" class="form-label">Confirmar Contraseña</label>
+      <label for="inputPassword5" class="form-label">Confirm Password</label>
       <input 
             class="form-control {% if form.password2.errors %}is-invalid{% endif %}"
             type="password" 
             name = "password2"  
-            placeholder="Confirmar Contraseña"
+            placeholder="Confirm Password"
             value="{{ user.password2}}"
             required/>
           <div class="invalid-feedback">
@@ -120,18 +120,18 @@
             {% endfor %}
           </div>
       <div id="passwordHelpBlock" class="form-text">
-        Su contraseña debe tener entre 8 y 20 caracteres, contener letras y números, y no debe contener espacios, caracteres especiales ni emojis.
+        Your password must be between 8 and 20 characters, contain letters and numbers, and must not contain spaces, special characters, or emojis.
       </div>
     </div>
     <div class="col-md-3">
-      <label for="validationCustom05" class="form-label">Número de contacto</label>
+      <label for="validationCustom05" class="form-label">Contact number</label>
       {{ form.phone}} 
       <div class="invalid-feedback">
         Por favor, escribe tu número de celular.
       </div>
     </div>
     <div class="col-md-3">
-      <label for="validationCustom04" class="form-label"><h5>Selecione rol</h5></label> <br>
+      <label for="validationCustom04" class="form-label"><h5>Select role</h5></label> <br>
       
         {{ form.is_staff}} {{ form.is_staff.label_tag}} <br>
         {{ form.is_profesor}} {{ form.is_profesor.label_tag}} <br>

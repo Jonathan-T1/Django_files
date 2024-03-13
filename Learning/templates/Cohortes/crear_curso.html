@@ -1,18 +1,18 @@
 {% extends "base.html" %}
-{% block title %} crear curso{% endblock  %}
+{% block title %} Create a Course{% endblock  %}
 {% block content %} 
 {% load crispy_forms_tags %}
 <div class="container my-4">
     <div class="row">
         <div class="col">
-            <h2>Crear Curso</h2>
+            <h2>Create a Course</h2>
         </div>
         <div class="col">
             <span class="float-end">
                 {% if request.user.is_staff %}
                 <div class="mb-2" class="fixed-top">
                   <a href="{% url 'cursos' %}" class="btn btn-success" role="button">
-                    <i class="bi bi-box-arrow-left"></i> Cursos </a>
+                    <i class="bi bi-box-arrow-left"></i> Courses </a>
                 </div>
                 {% endif %}
             </span>
@@ -33,11 +33,11 @@
         {% csrf_token %}
         <div class="card mx-auto my-5" style="width: 40rem;">
             <div class="card-body border rounded shadow-lg">
-                <h5 class="card-title">Complete todos los campos</h5>
+                <h5 class="card-title">Complete all fields</h5>
                 {{ form | crispy }}
                 <a class="card-link" href="{% url 'home' %}">HOME</a>
 
-                <button class="btn btn-primary float-end" type="submit">Guardar</button>
+                <button class="btn btn-primary float-end" type="submit">Save</button>
             </div>
         </div>
     </form>

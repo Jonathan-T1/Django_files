@@ -7,7 +7,7 @@
 <div class="m-3 p-3">
 
     <div class="row m-3">
-      <h2 class="text-center">Editar Usuario</h2>
+      <h2 class="text-center">Edit User</h2>
       
         {% if messages %}
           <ul class="messages">
@@ -24,12 +24,12 @@
       <form class="row g-3 needs-validation" action="" method="post">
       {% csrf_token %}
         <div class="col-md-4">
-          <label for="validatename01" class="form-label">Tu nombre</label>
+          <label for="validatename01" class="form-label">Name </label>
           <input 
             class="form-control {% if form.first_name.errors %}is-invalid{% endif %}"
             type="text" 
             name = "first_name"  
-            placeholder="Intruduzca su nombre "
+            placeholder="Enter your name "
             value="{% if form.errors %}{{ form.first_name.value }}{% else %}{{ editarrol.first_name }}{% endif %}"
             required/>
           <div class="invalid-feedback">
@@ -42,12 +42,12 @@
          </div>
         </div>
     <div class="col-md-4">
-      <label for="validatelastname01" class="form-label">Tu apellido</label>
+      <label for="validatelastname01" class="form-label">Last Name</label>
       <input 
             class="form-control {% if form.last_name.errors %}is-invalid{% endif %}"
             type="text" 
             name = "last_name"  
-            placeholder="Intruduzca su Apellido"
+            placeholder="Enter your Last Name"
             value="{% if form.errors %}{{ form.last_name.value }}{% else %}{{ editarrol.last_name }}{% endif %}"
             required/>
             <div class="invalid-feedback">
@@ -60,12 +60,12 @@
       </div>
     </div>
     <div class="col-md-4">
-      <label for="validatelastname01" class="form-label">Cedula</label>
+      <label for="validatelastname01" class="form-label">Citizenship card</label>
       <input 
             class="form-control {% if form.cedula.errors %}is-invalid{% endif %}"
             type="text" 
             name = "cedula"  
-            placeholder="Intruduzca su Cedula"
+            placeholder="Enter your ID"
             value="{% if form.errors %}{{ form.cedula.value }}{% else %}{{ editarrol.cedula }}{% endif %}"
             required/>
           <div class="invalid-feedback">
@@ -83,7 +83,7 @@
             class="form-control {% if form.email.errors %}is-invalid{% endif %}"
             type="email" 
             name = "email"  
-            placeholder="Intruduzca su email"
+            placeholder="Enter your email address"
             value="{% if form.errors %}{{ form.email.value }}{% else %}{{ editarrol.email }}{% endif %}"
             required/>
           <div class="invalid-feedback">
@@ -96,14 +96,14 @@
         </div>
       </div>
       <div class="col-md-4">
-        <label for="validationCustomUsername" class="form-label">Nombre de usuario</label>
+        <label for="validationCustomUsername" class="form-label">Username </label>
         <div class="input-group has-validation">
           <span class="input-group-text" id="inputGroupPrepend">@</span>
           <input 
               class="form-control {% if form.username.errors %}is-invalid{% endif %}"
               type="username" 
               name = "username"  
-              placeholder="Intruduzca su nombre de Usuario"
+              placeholder="Enter the Username"
               value="{% if form.errors %}{{ form.username.value }}{% else %}{{ editarrol.username }}{% endif %}"
               required/>
             <div class="invalid-feedback">
@@ -117,7 +117,7 @@
         </div>
       </div>               
       <div class="col-md-3">
-        <label for="validationCustom05" class="form-label">Número de contacto</label>
+        <label for="validationCustom05" class="form-label">Contact number</label>
         <input 
               class="form-control {% if form.phone.errors %}is-invalid{% endif %}"
               type="text" 
@@ -137,7 +137,7 @@
       <div class="col-md-3">
         </div>
       <div class="col-md-3">
-        <label for="validationCustom04" class="form-label"><h5>Selecione rol</h5></label> <br>
+        <label for="validationCustom04" class="form-label"><h5>Select role</h5></label> <br>
         
           {{ form.is_staff}} {{ form.is_staff.label_tag}} <br>
           {{ form.is_profesor}} {{ form.is_profesor.label_tag}} <br>
@@ -151,7 +151,7 @@
         </div>
       <div class="col-md-4">
         <div class="col-12">
-            <button class="btn btn-sm btn-primary float-center" type="submit">Editar Usuario</button>
+            <button class="btn btn-sm btn-primary float-center" type="submit">Edit User</button>
         </div>
         </div> 
     </form>

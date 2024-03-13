@@ -14,11 +14,7 @@
 						{% for course in progress_courses %}
 							<li class="list-group-item list-group-item-warning">
 								{{ course.nombreCoh }}
-								<button type="button" class="btn btn-sm btn-warning float-end" data-bs-toggle="modal" data-bs-target="#modalEvolution" onclick="showEvolutionModal(this)" data-course-id="{{ course.id }}" data-student-id="{{ student_id }}">
-									{% if course.status == 'P' %}
-										Consultar Evolución
-									{% endif %}
-								</button>
+								
 							</li>
 						{% endfor %}
 					</ul>
@@ -43,11 +39,7 @@
 					{% for course in inscription_courses %}
 						<li class="list-group-item list-group-item-success">
 							{{ course.nombreCoh }}
-							<button type="button" class="btn btn-sm btn-success float-end" data-bs-toggle="modal" data-bs-target="#modalEvolution" onclick="showEvolutionModal(this)" data-course-id="{{ course.id }}" data-student-id="{{ student_id }}">
-								{% if course.status == 'I' %}
-									Consultar Evolución
-								{% endif %}
-							</button>
+							
 						</li>
 					{% endfor %}
 				</ul>
@@ -72,11 +64,7 @@
 				{% for course in finalized_courses %}
 					<li class="list-group-item list-group-item-danger">
 						{{ course.nombreCoh }}
-						<button type="button" class="btn btn-sm btn-danger float-end" data-bs-toggle="modal" data-bs-target="#modalEvolution" onclick="showEvolutionModal(this)" data-course-id="{{ course.id }}" data-student-id="{{ student_id }}">
-							{% if course.status == 'F' %}
-								Consultar Evolución
-							{% endif %}
-						</button>
+						
 					</li>
 				{% endfor %}
 			</ul>
@@ -90,19 +78,4 @@
 </div>
 </div>
 
-<!-- Modal -->
-<div class="modal fade" id="modalEvolution" tabindex="-1" aria-labelledby="modalEvolutionLabel" aria-hidden="true">
-	<div class="modal-dialog modal-dialog-scrollable">
-		<div class="modal-content">
-			<div class="modal-header">
-				<h5 class="modal-title" id="modalEvolutionLabel">Consultar Evolución</h5>
-				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-			</div>
-			<div class="modal-body" id="modal-body"></div>
-			<div class="modal-footer">
-				<a class="btn btn-sm btn-danger" href="" id="generate-pdf-button">Generar PDF</a>
-				<button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-			</div>
-		</div>
-	</div>
-</div>
+

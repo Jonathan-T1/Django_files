@@ -1,0 +1,41 @@
+{% load static %}
+<div class="">
+    <nav class="navbar navbar-dark bg-secondary ">
+        <div class="container-fluid" >
+          <a class="navbar-brand" href={% url 'staff_overview' %}>Learning You</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="offcanvas offcanvas-end text-bg-secondary" tabindex="-1" id="offcanvasDarkNavbar" aria-labelledby="offcanvasDarkNavbarLabel">
+            <div class="offcanvas-header">
+              <h5 class="offcanvas-title" id="offcanvasDarkNavbarLabel">Learning You</h5>
+              <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+           </div>
+            <div class="offcanvas-body">
+              <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+                <li class="nav-item">
+                  <a class="nav-link active" aria-current="page" href={% url 'home' %}><i class="bi bi-house-door"></i> Home</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link active" href={% url 'staff_overview' %}><i class="bi bi-book"></i> Learning</a>
+                  <li class="nav-item">
+                    <a class="nav-link active" href={% url 'exit' %}><i class="bi bi-box-arrow-left"></i> Log out</a>
+                  </li>
+                  <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle active" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                      Hellow {{ user.username }} Thanks for be our staff member <br>
+                      this are your options
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-danger">
+                      <li><a class="dropdown-item" href={% url "see_users" %}>User</a></li>
+                      <li>
+                        <hr class="dropdown-divider">
+                      </li>
+                      <li><a class="dropdown-item" href={% url 'cursos' %}>Cursos</a></li>
+                    </ul>
+                  </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</div>

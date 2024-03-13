@@ -21,9 +21,9 @@ class CustumUserCreationForm(UserCreationForm):
         }
         widgets = {
             'first_name':forms.TextInput(attrs={'class':'form-control','placeholder':'Indroduzca sus Nombres'}),
-            'last_name':forms.TextInput(attrs={'class':'form-control','placeholder':'Indroduzca sus Apellidos'}),
+            'last_name':forms.TextInput(attrs={'class':'form-control','placeholder':'Enter your Last Name'}),
             'cedula':forms.TextInput(attrs={'class':'form-control','placeholder':'Indroduzca su Cedula'}),
-            'phone':forms.TextInput(attrs={'class':'form-control','placeholder':'Ingrese su Numero'}),
+            'phone':forms.TextInput(attrs={'class':'form-control','placeholder':'Contact number'}),
             'username':forms.TextInput(attrs={'class':'form-control','placeholder':'Indroduzca su Nombre de Usuario'}),
             'password1':forms.PasswordInput(attrs={'class':'form-control','placeholder':'Indroduzca su Contraseña'}),
             'password2':forms.PasswordInput(attrs={'class':'form-control','placeholder':'Repita su Contraseña'}),
