@@ -18,7 +18,6 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls import handler404, handler500
-from Learning.views import error_404, error_500
 from django.contrib.auth import views as auth_views
 
 
@@ -32,9 +31,8 @@ urlpatterns = [
     path('reset/password_reset_complete', auth_views.PasswordResetCompleteView.as_view(template_name='registration/password_reset_complete.html'), name='password_reset_complete'),
 ]
 
-handler404 = 'Learning.views.error_404'
-
-
 if settings.DEBUG:
     from django.conf.urls.static import static
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+handler404 = 'Learning.views.error_404'

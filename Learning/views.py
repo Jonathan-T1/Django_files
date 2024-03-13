@@ -152,7 +152,7 @@ def crear_curso(request):
         return redirect('error')
     
 def error_404(request,exception):
-    return render(request,'404_error.html', status=404) 
+    return render(request,'404_error.html') 
 
 def error_500(request):
     return render(request, 'composition/500_error.html')
